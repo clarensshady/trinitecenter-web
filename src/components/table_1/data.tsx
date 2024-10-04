@@ -1,4 +1,4 @@
-import { Icol, ITirage } from "../../types/table";
+import { Icol } from "../../types/table";
 
 const columns: Icol[] = [
   { name: "NOM", uid: "nom" },

@@ -12,7 +12,6 @@ import {
   cn,
 } from "@nextui-org/react";
 import * as React from "react";
-import { tirage } from "../statistique/selectData";
 import { ILimiteBoule } from "../../types/LimiteBoule";
 import { ClipLoader } from "react-spinners";
 import { doc, getDoc, updateDoc } from "firebase/firestore";

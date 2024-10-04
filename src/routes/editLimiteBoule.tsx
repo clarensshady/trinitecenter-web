@@ -35,9 +35,7 @@ export function EditLimiteBoule() {
     setTirage(event.target.value);
   };
 
-  const onValueChange = (isSelected: boolean) => {
-    setBlock(isSelected);
-  };
+
 
   const LBcol = doc(db, "limiteboule", `${params.id}`);
   const configurer = async () => {

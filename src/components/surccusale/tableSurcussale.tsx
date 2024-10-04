@@ -48,10 +48,10 @@ const INITIAL_VISIBLE_COLUMNS = [
 export default function TableSurcussale() {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [statusFilter, setStatusFilter] = React.useState<any>("all");
+  const [statusFilter] = React.useState<any>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [surcussales, setSurcussale] = React.useState<IrecSuc[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);

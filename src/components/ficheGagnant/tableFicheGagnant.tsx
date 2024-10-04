@@ -109,7 +109,7 @@ interface ISel {
 export default function FicheGagnantTable() {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [fiches, setFiche] = React.useState<IFicheGagnant[]>([]);

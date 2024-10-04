@@ -59,9 +59,9 @@ export function EditTirage() {
   const onChangeCloseTime = (value: Time) =>
     setTime({ ...timeInterval, fermeture: value });
 
-  const onValueChange = (isSelected: boolean) => {
+  /*  const onValueChange = (isSelected: boolean) => {
     setBlock(isSelected);
-  };
+  }; */
   const tirageRef = doc(db, "Tirages", `${params.id}`);
 
   const ModifierTirage = async () => {

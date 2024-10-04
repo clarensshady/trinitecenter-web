@@ -75,12 +75,12 @@ export default function RapportTable({
   dateDefin,
   setLoading,
 }: IRapport) {
-  const [filterValue, setFilterValue] = React.useState<string>("");
+  const [filterValue /* setFilterValue */] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns /* setVisibleColumns */] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(5);
   const [data, setData] = React.useState<IData[]>([]);
 
   React.useEffect(() => {

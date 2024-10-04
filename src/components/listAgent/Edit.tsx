@@ -65,9 +65,9 @@ export function EditAgent() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const onValueCheck = (isSelected: boolean) => {
+  /* const onValueCheck = (isSelected: boolean) => {
     setBlock(isSelected);
-  };
+  }; */
 
   const Ajouter = async () => {
     try {

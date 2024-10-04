@@ -42,11 +42,11 @@ const INITIAL_VISIBLE_COLUMNS = [
 export default function TableLimiteJeuParAgent() {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns, /* setVisibleColumns */] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [limites, setLimites] = React.useState<ILPA[]>([]);
-  const [statusFilter, setStatusFilter] = React.useState<any>("all");
+  const [statusFilter, /* setStatusFilter */] = React.useState<any>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [loading, setLoading] = React.useState<boolean>(true);
 

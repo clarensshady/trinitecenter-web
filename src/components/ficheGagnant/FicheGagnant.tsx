@@ -1,4 +1,3 @@
-import * as React from "react";
 import { BreadcrumbItem, Breadcrumbs, Card, CardBody } from "@nextui-org/react";
 import FicheGagnantTable from "./tableFicheGagnant";
 

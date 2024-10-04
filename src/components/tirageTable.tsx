@@ -55,7 +55,7 @@ export default function Tiragetable({ setLag }: ITirageTableProps) {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [tirages, setTirages] = React.useState<ITirage<string>[]>([]);

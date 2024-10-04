@@ -55,9 +55,6 @@ export function EditSuperviseur() {
     setData({ ...data, [name]: event.target.value });
   };
 
-  const onValueChange = (isSelected: boolean) => {
-    setBlock(isSelected);
-  };
 
   const onChangeSelect = (value: CalendarDate) => {
     setBirth(value);

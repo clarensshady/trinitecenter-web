@@ -31,7 +31,7 @@ export interface IModalProps {
 }
 
 export function ModalComp({}: IModalProps) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpenChange } = useDisclosure();
 
   const time: ZonedDateTime = now(getLocalTimeZone());
 

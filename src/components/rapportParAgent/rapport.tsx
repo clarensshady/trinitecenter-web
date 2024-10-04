@@ -11,7 +11,6 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { AgentData } from "../statistique/agentData";
 import RapportTable from "./tablerapportParAgent";
 import { ClipLoader } from "react-spinners";
 import { allBank } from "../../utils/mainActions";

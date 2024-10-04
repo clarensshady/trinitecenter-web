@@ -18,7 +18,7 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { IsupCol } from "../../types/table";
-import { onSnapshot, collection, query, where } from "firebase/firestore";
+import { onSnapshot, collection, query } from "firebase/firestore";
 import { db } from "../../config";
 import { IFicheVendu } from "../../types/fiches";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,6 @@ import { DeleteIcon } from "./deleteIcon";
 import { faAward, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { deleteFiche, peyeFiche } from "./actions";
 import __ from "lodash";
-import { Tirages } from "../ventes/tirage";
 import {
   getLocalTimeZone,
   parseDateTime,
@@ -116,7 +115,7 @@ interface ISel {
 export default function FicheVenduTable() {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [fiches, setFiche] = React.useState<IFicheVendu[]>([]);

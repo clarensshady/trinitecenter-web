@@ -32,9 +32,9 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 export default function TableGagnant() {
-  const [filterValue, setFilterValue] = React.useState<string>("");
+  const [filterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns /* setVisibleColumns */] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [lotGagnant, setLotGagnant] = React.useState<Iga[]>([]);
@@ -66,7 +66,7 @@ export default function TableGagnant() {
     allLotGagnant();
   }, []);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(5);
 
   const [page, setPage] = React.useState(1);
 

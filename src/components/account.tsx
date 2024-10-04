@@ -1,11 +1,10 @@
-import * as React from "react";
 import { ListboxWrapper } from "./listBoxWrapper";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
 export interface IVendeurAcProps {}
 
-export function Account(props: IVendeurAcProps) {
+export function Account() {
   const navigate: NavigateFunction = useNavigate();
 
   return (

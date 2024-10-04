@@ -5,8 +5,6 @@ import {
   Breadcrumbs,
   Button,
   Input,
-  Select,
-  SelectItem,
   Switch,
   TimeInput,
   cn,
@@ -21,7 +19,6 @@ import {
   useDisclosure,
   Link,
 } from "@nextui-org/react";
-import { tirage } from "./statistique/selectData";
 import {
   Time,
   ZonedDateTime,

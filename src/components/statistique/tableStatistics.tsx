@@ -31,7 +31,6 @@ import { IStatTirage, IStatistics } from "../../types/statistics";
 import __ from "lodash";
 import { StatisticsLot } from "../ventes/actions";
 
-
 interface Ilotto {
   Lotto3: number;
   Lotto4op1: number;
@@ -87,13 +86,13 @@ export default function TableStatistics({
   HeureDuFiche,
   setLoading,
 }: ITableStatisticsProps) {
-  const [filterValue, setFilterValue] = React.useState<string>("");
+  const [filterValue /* setFilterValue */] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns /* setVisibleColumns */] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [stats, setStat] = React.useState<IStatTirage[]>([]);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(5);
 
   const [page, setPage] = React.useState(1);
 
@@ -133,7 +132,7 @@ export default function TableStatistics({
 
         if (statRef.empty) {
           setStat([]);
-          
+
           setLoading(false);
         }
         if (!statRef.empty) {

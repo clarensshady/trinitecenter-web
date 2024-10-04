@@ -1,5 +1,4 @@
 import { IsupCol } from "../../types/table";
-import { IListAgent } from "../../types/agent";
 
 const columns: IsupCol[] = [
   { name: "ID", uid: "id", sortable: true },

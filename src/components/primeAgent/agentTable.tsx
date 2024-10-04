@@ -40,7 +40,7 @@ export default function AgentTable() {
   const [agents, setAgents] = React.useState<IListofPrimeAgent[]>([]);
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(5);
   const [loading, setLoading] = React.useState<boolean>(true);
 
   const [page, setPage] = React.useState(1);

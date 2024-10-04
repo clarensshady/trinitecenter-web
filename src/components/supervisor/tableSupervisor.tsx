@@ -58,12 +58,12 @@ export interface IModalEditProps {
 export default function TableSupervisor() {
   const [filterValue, setFilterValue] = React.useState<string>("");
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns /* setVisibleColumns */] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [isLoading, setLoading] = React.useState<boolean>(true);
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [statusFilter, setStatusFilter] = React.useState<any>("all");
+  const { isOpen, /* onOpen, */ onOpenChange, onClose } = useDisclosure();
+  const [statusFilter /* setStatusFilter */] = React.useState<any>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [supervisors, setSuperviseur] = React.useState<IRSup[]>([]);
 

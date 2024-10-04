@@ -40,8 +40,8 @@ interface ISel {
 export function LotGagnantComp() {
   let defaultDate: CalendarDate = today(getLocalTimeZone());
 
-  const [dateDebut, setDateDeDebut] = React.useState(defaultDate);
-  const [dateDeFin, setDateDeFin] = React.useState(defaultDate);
+  // const [dateDebut, setDateDeDebut] = React.useState(defaultDate);
+  // const [dateDeFin, setDateDeFin] = React.useState(defaultDate);
   const [dateDuTirage, setDateDuTirage] =
     React.useState<CalendarDate>(defaultDate);
   const [data, setData] = React.useState<IAdd>({} as IAdd);
@@ -149,7 +149,7 @@ export function LotGagnantComp() {
             size="xl"
           >
             <ModalContent>
-              {(onClose) => (
+              {() => (
                 <>
                   <ModalHeader className="flex flex-col gap-1">
                     Ajouter Lot Gagnants

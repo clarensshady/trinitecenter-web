@@ -18,8 +18,7 @@ import {
   ModalFooter,
   useDisclosure,
   NavbarMenu,
-  NavbarMenuItem,
-  Link,
+ 
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,7 +38,7 @@ interface Inav {
   setWidth: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const menuItems = [
+/* const menuItems = [
   "Profile",
   "Dashboard",
   "Activity",
@@ -50,12 +49,12 @@ const menuItems = [
   "Team Settings",
   "Help & Feedback",
   "Log Out",
-];
+]; */
 
 export default function HomeNavbar({ setWidth }: Inav) {
   const [checked, setCheck] = React.useState(true);
 
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen] = React.useState(false);
   const onValueChange = (isSelected: boolean) => {
     setCheck(isSelected);
   };

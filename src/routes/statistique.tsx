@@ -1,4 +1,3 @@
-import { LotGagnantComp } from "../components/lotsGagnant/lotsGagnant";
 import { StatisticsComp } from "../components/statistique/Statistics";
 
 export interface IListirageProps {}

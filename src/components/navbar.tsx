@@ -19,7 +19,7 @@ import { faUser, faUserGear } from "@fortawesome/free-solid-svg-icons";
 
 export interface INavbarProps {}
 
-export function NavbarScreen(props: INavbarProps) {
+export function NavbarScreen() {
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set(["Who"]));
 
   const selectedValue = React.useMemo(

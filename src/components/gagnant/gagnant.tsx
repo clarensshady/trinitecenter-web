@@ -20,7 +20,7 @@ const INITIAL_VISIBLE_COLUMNS = ["nom_tirage", "numero_gagnant", "date"];
 
 export default function TableLotGagnant() {
   const [selectedKeys, setSelectedKeys] = React.useState<any>(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState<any>(
+  const [visibleColumns] = React.useState<any>(
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [lotGagnant, setLotGagnant] = React.useState<Iga[]>([]);
@@ -48,9 +48,9 @@ export default function TableLotGagnant() {
     allLotGagnant();
   }, []);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
+  const [rowsPerPage] = React.useState<number>(5);
 
-  const [page, setPage] = React.useState(1);
+  const [page] = React.useState(1);
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns == "all") return columns;

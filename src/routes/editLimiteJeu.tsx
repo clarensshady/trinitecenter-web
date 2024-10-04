@@ -51,10 +51,6 @@ export function EditLimiteJeu() {
     setSelectData({ ...selectData, [event.target.name]: event.target.value });
   };
 
-  const onValueChange = (isSelected: boolean) => {
-    setBlock(isSelected);
-  };
-
   const LBcol = doc(db, "limiteJeu", `${params.id}`);
   const configurer = async () => {
     try {

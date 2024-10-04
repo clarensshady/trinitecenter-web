@@ -30,7 +30,7 @@ interface IStat {
 
 export function Content() {
   const [boules, setBoule] = React.useState<IList[]>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  // const [loading, setLoading] = React.useState<boolean>(false);
   const [stats, setStat] = React.useState<IStat>({} as IStat);
 
   const tirageRef = collection(db, "lotGagnants");
@@ -38,11 +38,11 @@ export function Content() {
   React.useEffect(() => {
     const allTirages = async () => {
       try {
-        setLoading(true);
+        // setLoading(true);
         const tirages = await getDocs(tirageRef);
         if (tirages.empty) {
           console.log("error is empty");
-          setLoading(false);
+          // setLoading(false);
         }
         const numbers = tirages.docs.map((doc) => {
           return {
@@ -54,7 +54,7 @@ export function Content() {
           } as IList;
         });
 
-        setLoading(false);
+        // setLoading(false);
 
         setBoule(numbers);
       } catch (error) {

@@ -1,4 +1,4 @@
-import { IsupCol, ILimiteJeu } from "../../types/table";
+import { IsupCol } from "../../types/table";
 
 const columns: IsupCol[] = [
   { name: "ID", uid: "id", sortable: true },

@@ -12,10 +12,9 @@ import {
 } from "@nextui-org/react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import { Tirages } from "./tirage";
-import { Surccusales } from "./Succursale";
 import __ from "lodash";
 import { balanceLogics } from "./actions";
-import { allBank, allSurcussale } from "../../utils/mainActions";
+import { /* allBank, */ allSurcussale } from "../../utils/mainActions";
 
 interface IStat {
   fiche: number;
@@ -50,7 +49,7 @@ export function VenteComp() {
   const [stats, setStat] = React.useState<IStat>({} as IStat);
   const [data, setData] = React.useState<IData>({} as IData);
   const [surcussale, setSurcussale] = React.useState<ISel[]>([]);
-  const [bank, setBank] = React.useState<ISel[]>([]);
+  // const [bank, setBank] = React.useState<ISel[]>([]);
 
   const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -78,17 +77,17 @@ export function VenteComp() {
       }
     };
 
-    const showBank = async () => {
+    /* const showBank = async () => {
       try {
         const bank = await allBank();
         setBank(bank);
       } catch (error) {
         throw new Error(`${error}`);
       }
-    };
+    }; */
 
     showSurcu();
-    showBank();
+    // showBank();
   }, []);
 
   return (
