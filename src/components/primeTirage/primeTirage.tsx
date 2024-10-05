@@ -24,6 +24,7 @@ import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { someTirage } from "../../utils/mainActions";
+import { useMediaQuery } from "@reactuses/core";
 
 export interface IPrimeParAgentProps {}
 interface ISel {
@@ -112,6 +113,8 @@ export function PrimeParTirage() {
     showTirage();
   }, []);
 
+  const isTrue = useMediaQuery("(max-width: 640px)");
+
   return (
     <div className="flex-1 w-full flex-col">
       <div className="flex justify-between">
@@ -138,7 +141,9 @@ export function PrimeParTirage() {
             onPress={onOpen}
             startContent={<FontAwesomeIcon className="pr-1" icon={faPlus} />}
           >
-            <span className="text-md text-white">Ajouter Tirage </span>
+            <span className="text-md text-white">
+              {isTrue ? "Ajouter " : "Ajouter Tirage"}
+            </span>
           </Button>
           <ToastContainer />
           {/* for modal */}
@@ -335,8 +340,8 @@ export function PrimeParTirage() {
             </div>
           </div>
           {/* for the table */}
-          <div className="w-[98%] overflow-auto whitespace-nowrap md:flex-1  mt-7 mx-2">
-            <div className="max-w-[400px] sm:max-w-full">
+          <div className=" overflow-auto whitespace-nowrap md:flex-1  mt-7 mx-2">
+            <div className="max-w-[300px] sm:max-w-full">
               <AgentTableTirage />
             </div>
           </div>

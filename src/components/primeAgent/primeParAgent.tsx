@@ -24,6 +24,7 @@ import { db } from "../../config";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { someBank, someTirage } from "../../utils/mainActions";
+import { useMediaQuery } from "@reactuses/core";
 
 export interface IPrimeParAgentProps {}
 interface ISel {
@@ -125,6 +126,8 @@ export function PrimeParAgent() {
     showTirage();
   }, []);
 
+  const isTrue = useMediaQuery("(max-width: 640px)");
+
   return (
     <div className="flex-1 w-full flex-col">
       <div className="flex justify-between">
@@ -151,7 +154,9 @@ export function PrimeParAgent() {
             onPress={onOpen}
             startContent={<FontAwesomeIcon className="pr-1" icon={faPlus} />}
           >
-            <span className="text-md text-white">Ajouter Prime</span>
+            <span className="text-md text-white">
+              {isTrue ? "Ajouter" : "Ajouter Prime"}
+            </span>
           </Button>
           <ToastContainer />
           {/* code for modal */}
@@ -378,8 +383,8 @@ export function PrimeParAgent() {
               </Button>
             </div>
           </div>
-          <div className="w-[98%] overflow-auto whitespace-nowrap mt-7 mx-2 md:flex-1">
-            <div className="max-w-[400px] sm:max-w-full">
+          <div className="w-full overflow-auto whitespace-nowrap mt-7 mx-2 md:flex-1">
+            <div className="max-w-[300px] sm:max-w-full">
               <AgentTable />
             </div>
           </div>

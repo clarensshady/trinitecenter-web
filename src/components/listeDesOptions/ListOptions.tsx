@@ -25,6 +25,7 @@ import { Bounce, toast } from "react-toastify";
 import { colorSelect } from "./color";
 import { someSurcussale } from "../../utils/mainActions";
 import __ from "lodash";
+import { useMediaQuery } from "@reactuses/core";
 
 interface IData {
   Bank: string;
@@ -108,6 +109,8 @@ export function ListOptionsComp() {
     showSurcu();
   }, []);
 
+  const isTrue = useMediaQuery("(max-width: 640px)");
+
   return (
     <div className="w-full flex-1 flex-col">
       {/*  */}
@@ -138,7 +141,9 @@ export function ListOptionsComp() {
             onPress={onOpen}
             startContent={<FontAwesomeIcon className="pr-1" icon={faPlus} />}
           >
-            <span className="text-md text-white">Ajouter Option </span>
+            <span className="text-md text-white">
+              {isTrue ? "Ajouter" : "Ajouter Option"}
+            </span>
           </Button>
           {/* just code for opening option add-on */}
           <Modal
@@ -241,7 +246,7 @@ export function ListOptionsComp() {
         </div>
       </div>
       <div className="overflow-auto whitespace-nowrap w-full flex-1 mt-14 border-solid border-slate-100 border-1 rounded-2xl shadow-xl">
-        <div className="max-w-[400px] sm:max-w-full w-full flex-1  ">
+        <div className="max-w-[300px] sm:max-w-full w-full flex-1  ">
           {/* add table */}
           <TableOptions />
         </div>

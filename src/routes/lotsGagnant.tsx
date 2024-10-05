@@ -4,7 +4,7 @@ export interface IListirageProps {}
 
 export function LotsGagnant() {
   return (
-    <div className="px-4 sm:px-6 py-10">
+    <div className="px-3 sm:py-10 sm:px-6 py-7">
       <LotGagnantComp />
     </div>
   );

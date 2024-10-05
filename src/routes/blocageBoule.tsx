@@ -4,7 +4,7 @@ export interface IListirageProps {}
 
 export function BlocageBoule() {
   return (
-    <div className="px-6 py-10">
+    <div className="px-3 sm:px-6 sm:py-10 py-7">
       <BlocageBouleComp />
     </div>
   );

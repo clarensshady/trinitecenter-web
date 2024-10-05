@@ -139,7 +139,7 @@ export function StatisticsComp() {
               name="Tirage"
               placeholder="Tirage"
               onChange={onSelectData}
-              className="max-w-xs"
+              className="hidden md:max-w-xs md:flex"
               value={selectData.Tirage}
             >
               {tirage.map((s) => (
@@ -214,7 +214,7 @@ export function StatisticsComp() {
           </div>
           {/* for the table */}
           <div className="overflow-auto whitespace-nowrap w-[98%] md:w-full md:flex-1 mt-7 mx-2">
-            <div className="max-w-[400px] md:max-w-full md:w-full md:flex-1">
+            <div className="max-w-[300px] md:max-w-full md:w-full md:flex-1">
               <TableStatistics {...data} />
             </div>
           </div>

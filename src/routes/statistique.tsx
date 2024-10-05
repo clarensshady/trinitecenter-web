@@ -4,7 +4,7 @@ export interface IListirageProps {}
 
 export function Statistics() {
   return (
-    <div className="px-6 py-10">
+    <div className=" sm:px-6 px-3 py-7 sm:py-10">
       <StatisticsComp />
     </div>
   );

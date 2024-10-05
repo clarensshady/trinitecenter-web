@@ -161,7 +161,9 @@ export function ListeTiragecomp() {
                   <FontAwesomeIcon className="pr-1" icon={faPlus} />
                 }
               >
-                <span className="text-md text-white">Ajouter Tirage</span>
+                <span className="text-md text-white">
+                  {isTrue ? "Ajouter" : "Ajouter un Tirage"}
+                </span>
               </Button>
               <ToastContainer />
               {/* for tirage modal */}
@@ -175,7 +177,7 @@ export function ListeTiragecomp() {
                   {(onClose) => (
                     <>
                       <ModalHeader className="flex flex-col gap-1">
-                        Ajouter un Tirage
+                        AJouter Tirage
                       </ModalHeader>
                       <ModalBody>
                         <div className="flex-1">
@@ -271,8 +273,8 @@ export function ListeTiragecomp() {
             </div>
           </div>
           <div className="mt-14 ">
-            <div className="shadow-xl w-[98%]  md:flex-1 md:w-full  overflow-x-auto whitespace-nowrap mt-1 border-solid border-slate-100 border-1 rounded-2xl ">
-              <div className="flex max-w-[510px] sm:max-w-full">
+            <div className="shadow-xl  md:flex-1 md:w-full  overflow-x-auto whitespace-nowrap mt-1 border-solid border-slate-100 border-1 rounded-2xl ">
+              <div className="flex max-w-[300px] sm:max-w-full">
                 <Tiragetable setLag={setLag} />
               </div>
             </div>

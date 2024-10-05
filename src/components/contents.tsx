@@ -77,7 +77,7 @@ export function Content() {
 
   return (
     <div className="w-full">
-      <div className="px-6 py-10">
+      <div className="px-3 sm:px-6 py-7 sm:py-10">
         <div className="flex flex-wrap gap-4 ">
           <div className="flex-1">
             <Card>
@@ -430,8 +430,10 @@ export function Content() {
               Lot Gagnant pour aujourd'hui
             </span>
           </div>
-          <div className="">
-            <TableLotGagnant />
+          <div className="w-full text-nowrap overflow-x-auto">
+            <div className="max-w-[300px] sm:max-w-full flex-1">
+              <TableLotGagnant />
+            </div>
           </div>
         </div>
         {/* first report */}

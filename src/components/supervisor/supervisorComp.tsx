@@ -352,8 +352,8 @@ export function SupervisorComp() {
           </Modal>
         </div>
       </div>
-      <div className="overflow-auto md:w-full whitespace-nowrap w-[98%] md:flex mt-14 border-solid shadow-xl border-slate-100 border-1 rounded-2xl">
-        <div className="max-w-[400px] md:max-w-full  md:flex-1 ">
+      <div className="overflow-auto md:w-full whitespace-nowrap md:flex mt-14 border-solid shadow-xl border-slate-100 border-1 rounded-2xl">
+        <div className="max-w-[300px]  md:max-w-full  md:flex-1 ">
           {/* add table */}
           <TableSupervisor />
         </div>

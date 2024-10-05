@@ -30,6 +30,7 @@ import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { someTirage } from "../../utils/mainActions";
 import __ from "lodash";
+import { useMediaQuery } from "@reactuses/core";
 
 export interface IListeTiragecompProps {}
 interface ISel {
@@ -111,6 +112,8 @@ export function LotGagnantComp() {
     showTirage();
   }, []);
 
+  const isTrue = useMediaQuery("(max-width: 640px)");
+
   return (
     <div className="w-full flex-1 flex-col">
       <div className="flex justify-between w-full items-center">
@@ -138,7 +141,9 @@ export function LotGagnantComp() {
             onPress={onOpen}
             startContent={<FontAwesomeIcon className="pr-1" icon={faPlus} />}
           >
-            <span className="text-md text-white">Ajouter Tirage </span>
+            <span className="text-md text-white">
+              {isTrue ? "Ajouter" : "Ajouter Tirage"}
+            </span>
           </Button>
           <ToastContainer />
           {/* for modal */}
@@ -262,7 +267,7 @@ export function LotGagnantComp() {
           </div> */}
           {/* for the table */}
           <div className=" overflow-auto whitespace-nowrap w-full sm:flex mt-7 sm:mx-2">
-            <div className="max-w-[400px] sm:max-w-full sm:w-full flex-1 ">
+            <div className="max-w-[300px] sm:max-w-full sm:w-full flex-1 ">
               <TableGagnant />
             </div>
           </div>

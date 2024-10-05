@@ -46,7 +46,7 @@ export function ListOfSurcussale() {
         </div>
       </div>
       <div className="w-full overflow-auto whitespace-nowrap flex-1 mt-14 border-solid shadow-xl border-slate-100 border-1 rounded-2xl">
-        <div className="w-full max-w-[400px] sm:max-w-full flex-1 ">
+        <div className="w-full max-w-[300px] sm:max-w-full flex-1 ">
           {/* add table */}
           <TableSurcussale />
         </div>

@@ -27,8 +27,8 @@ export function FicheGagnantComp() {
       <div className="mt-10">
         <Card shadow="none" className="shadow-xl">
           <CardBody>
-            <div className="mt-5 px-3 pt-3 overflow-auto whitespace-nowrap ">
-              <div className="max-w-[400px] md:max-w-full flex-1">
+            <div className="mt-5 sm:px-3 pt-3 overflow-auto whitespace-nowrap ">
+              <div className="max-w-[300px] md:max-w-full flex-1">
                 <FicheGagnantTable />
               </div>
             </div>

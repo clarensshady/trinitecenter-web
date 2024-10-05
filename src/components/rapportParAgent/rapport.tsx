@@ -117,7 +117,7 @@ export function RapportComp() {
               </div>
               <Button
                 variant="shadow"
-                className="py-7 text-lg rounded-md"
+                className="hidden sm:block py-7 text-lg rounded-md"
                 color="primary"
                 onClick={filterAgent}
               >
@@ -134,8 +134,8 @@ export function RapportComp() {
                 )}
               </Button>
             </div>
-            <div className="flex-1 mt-4 mx-2 overflow-auto whitespace-nowrap">
-              <div className="flex-1 max-w-[400px] sm:max-w-full">
+            <div className="flex-1 mt-4 sm:mx-2 overflow-auto whitespace-nowrap">
+              <div className="flex-1 max-w-[300px] sm:max-w-full">
                 <RapportTable {...data} />
               </div>
             </div>
