@@ -37,7 +37,11 @@ const balanceLogics = async () => {
     const gdate = toCalendarDate(today(getLocalTimeZone()));
     const d = new Date(gdate.toString());
 
-    const q = query(collection(db, "fiches"), where("timestamp", ">=", d));
+    const q = query(
+      collection(db, "fiches"),
+      where("timestamp", ">=", d),
+      where("isDeleted", "==", false)
+    );
 
     const data = {
       balance: 0,
@@ -53,7 +57,6 @@ const balanceLogics = async () => {
     };
     const fiches = await getDocs(q);
     if (!fiches.empty) {
-      console.log("in second");
       const fich = fiches.docs.map((doc) => {
         return {
           id: doc.data().id,

@@ -18,7 +18,7 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import { IsupCol } from "../../types/table";
-import { onSnapshot, collection, query } from "firebase/firestore";
+import { onSnapshot, collection, query, where } from "firebase/firestore";
 import { db } from "../../config";
 import { IFicheVendu } from "../../types/fiches";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -141,7 +141,10 @@ export default function FicheVenduTable() {
       try {
         // const gdate = toCalendarDate(today(getLocalTimeZone()));
         // const d = new Date(dateDebut.toString());
-        const q = query(collection(db, "fiches"));
+        const q = query(
+          collection(db, "fiches"),
+          where("isDeleted", "==", false)
+        );
         onSnapshot(q, (querySnapshot) => {
           const allFiches = querySnapshot.docs.map((doc) => {
             const Lottery = doc.data().Lottery as IBL[];
