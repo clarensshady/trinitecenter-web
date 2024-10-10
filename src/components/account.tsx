@@ -1,10 +1,13 @@
+import * as React from "react";
 import { ListboxWrapper } from "./listBoxWrapper";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
-export interface IVendeurAcProps {}
+export interface IVendeurAcProps {
+  setMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export function Account() {
+export function Account(props: IVendeurAcProps) {
   const navigate: NavigateFunction = useNavigate();
 
   return (
@@ -18,6 +21,11 @@ export function Account() {
         }
       >
         <ListboxItem
+          onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -27,6 +35,11 @@ export function Account() {
           <span className="text-[0.9rem] text-slate-500">Editer Profile</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }}
           startContent={
             <span className=" text-2xl font-bold -mt-3 text-slate-500">.</span>
           }

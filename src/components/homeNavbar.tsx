@@ -18,7 +18,6 @@ import {
   ModalFooter,
   useDisclosure,
   NavbarMenu,
- 
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -54,7 +53,7 @@ interface Inav {
 export default function HomeNavbar({ setWidth }: Inav) {
   const [checked, setCheck] = React.useState(true);
 
-  const [isMenuOpen] = React.useState(false);
+  const [isMenuOpen, setMenuOpen] = React.useState(false);
   const onValueChange = (isSelected: boolean) => {
     setCheck(isSelected);
   };
@@ -100,9 +99,10 @@ export default function HomeNavbar({ setWidth }: Inav) {
       setIsMessage(false);
     }
   }, [isMessage]);
+  console.log(isMenuOpen);
 
   return (
-    <Navbar maxWidth="full" isBordered /* onMenuOpenChange={setIsMenuOpen} */>
+    <Navbar maxWidth="full" isBordered onMenuOpenChange={setMenuOpen}>
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         className="md:hidden"
@@ -190,7 +190,7 @@ export default function HomeNavbar({ setWidth }: Inav) {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
-        <SideBar />
+        <SideBar setMenuOpen={setMenuOpen} />
       </NavbarMenu>
     </Navbar>
   );

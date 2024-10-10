@@ -1,8 +1,13 @@
+import * as React from "react";
 import { ListboxWrapper } from "./listBoxWrapper";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
-export function VendeurAc() {
+interface Ivend {
+  setMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function VendeurAc(props: Ivend) {
   const navigate: NavigateFunction = useNavigate();
 
   return (
@@ -14,6 +19,11 @@ export function VendeurAc() {
         }
       >
         <ListboxItem
+          onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -23,6 +33,11 @@ export function VendeurAc() {
           <span className="text-[0.9rem] text-slate-500">Ajouter</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }}
           startContent={
             <span className=" text-2xl font-bold -mt-3 text-slate-500">.</span>
           }

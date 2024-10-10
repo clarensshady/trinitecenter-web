@@ -102,6 +102,7 @@ export default function Dashboard() {
   ];
   const [photo, setPhoto] = React.useState<string>("");
   const [info, setInfo] = React.useState<IuserInfo>({} as IuserInfo);
+  const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
   const { userInfo } = useLotteryStore((state) => ({ userInfo: state.User }));
 
   const navigate: NavigateFunction = useNavigate();
@@ -128,6 +129,7 @@ export default function Dashboard() {
       }
     };
     userProfile();
+    console.log(menuOpen);
   }, []);
 
   const isTrue = useMediaQuery("(max-width: 790px)");
@@ -204,7 +206,7 @@ export default function Dashboard() {
                             ) : value.name == "Vendeur" ? (
                               <VendeurAc />
                             ) : value.name == "Surveillance" ? (
-                              <SurveillanceAc />
+                              <SurveillanceAc setMenuOpen={setMenuOpen} />
                             ) : value.name == "Rapports" ? (
                               <Rapport />
                             ) : value.name === "Succursale" ? (

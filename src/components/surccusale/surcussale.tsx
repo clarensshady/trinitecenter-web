@@ -110,7 +110,7 @@ export function NewSurcussaleComp() {
         </div>
         <ToastContainer />
       </div>
-      <div className="mt-10 w-[530px]">
+      <div className="mt-10 w-full  sm:w-[530px]">
         <Card className="">
           <CardBody>
             <div className="flex-1 px-3 py-4 w-full">

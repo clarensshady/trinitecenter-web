@@ -1,8 +1,11 @@
+import * as React from "react";
 import { ListboxWrapper } from "./listBoxWrapper";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
-export interface IConfigurationProps {}
+export interface IConfigurationProps {
+  setMenuOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export function Configuration() {
   const navigate: NavigateFunction = useNavigate();
@@ -24,6 +27,11 @@ export function Configuration() {
         }
       >
         <ListboxItem
+          /* onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }} */
           className="space-x-3"
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
@@ -33,6 +41,11 @@ export function Configuration() {
           <span className="text-[0.9rem] text-slate-500">Tirages</span>
         </ListboxItem>
         <ListboxItem
+          /* onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }} */
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -42,6 +55,11 @@ export function Configuration() {
           <span className="text-[0.9rem] text-slate-500">Prime Generale</span>
         </ListboxItem>
         <ListboxItem
+          /* onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }} */
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -51,6 +69,11 @@ export function Configuration() {
           <span className="text-[0.9rem] text-slate-500">Prime Agent</span>
         </ListboxItem>
         <ListboxItem
+          /* onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }} */
           startContent={
             <span className=" text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -62,6 +85,11 @@ export function Configuration() {
           </span>
         </ListboxItem>
         <ListboxItem
+          /* onClick={() => {
+            if (props.setMenuOpen) {
+              props.setMenuOpen(false);
+            }
+          }} */
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }

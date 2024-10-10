@@ -1,10 +1,13 @@
+import * as React from "react";
 import { ListboxWrapper } from "./listBoxWrapper";
 import { Listbox, ListboxItem } from "@nextui-org/react";
 import { useNavigate, NavigateFunction } from "react-router-dom";
 
-export interface IConfigurationProps {}
+export interface IConfigurationProps {
+  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export function SurveillanceAc() {
+export function SurveillanceAc({ setMenuOpen }: IConfigurationProps) {
   const navigate: NavigateFunction = useNavigate();
 
   return (
@@ -32,6 +35,10 @@ export function SurveillanceAc() {
         }
       >
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+            alert("good");
+          }}
           className="space-x-3"
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
@@ -41,6 +48,9 @@ export function SurveillanceAc() {
           <span className="text-[0.9rem] text-slate-500">Lot Gagnants</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -50,6 +60,9 @@ export function SurveillanceAc() {
           <span className="text-[0.9rem] text-slate-500">Blocage Boule</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -59,6 +72,9 @@ export function SurveillanceAc() {
           <span className="text-[0.9rem] text-slate-500">Statistiques</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className=" text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -70,6 +86,9 @@ export function SurveillanceAc() {
           </span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -79,6 +98,9 @@ export function SurveillanceAc() {
           <span className="text-[0.9rem] text-slate-500">Limite Jeu</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -90,6 +112,9 @@ export function SurveillanceAc() {
           </span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -99,6 +124,9 @@ export function SurveillanceAc() {
           <span className="text-[0.9rem] text-slate-500">Limite Boule</span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -110,6 +138,9 @@ export function SurveillanceAc() {
           </span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }
@@ -121,6 +152,9 @@ export function SurveillanceAc() {
           </span>
         </ListboxItem>
         <ListboxItem
+          onClick={() => {
+            setMenuOpen(false);
+          }}
           startContent={
             <span className="text-2xl font-bold -mt-3 text-slate-500">.</span>
           }

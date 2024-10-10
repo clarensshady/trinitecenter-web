@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   faBusinessTime,
   faChartLine,
@@ -81,7 +82,11 @@ const sections: Iselect[] = [
   },
 ];
 
-export function SideBar() {
+export function SideBar({
+  setMenuOpen,
+}: {
+  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const navigate = useNavigate();
 
   return (
@@ -105,15 +110,15 @@ export function SideBar() {
                     {value.name == "Configuration" ? (
                       <Configuration />
                     ) : value.name == "Vendeur" ? (
-                      <VendeurAc />
+                      <VendeurAc setMenuOpen={setMenuOpen} />
                     ) : value.name == "Surveillance" ? (
-                      <SurveillanceAc />
+                      <SurveillanceAc setMenuOpen={setMenuOpen} />
                     ) : value.name == "Rapports" ? (
                       <Rapport />
                     ) : value.name === "Succursale" ? (
-                      <SurcussaleAc />
+                      <SurcussaleAc setMenuOpen={setMenuOpen} />
                     ) : value.name == "Mon Compte" ? (
-                      <Account />
+                      <Account setMenuOpen={setMenuOpen} />
                     ) : (
                       "first one"
                     )}
