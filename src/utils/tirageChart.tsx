@@ -69,7 +69,7 @@ interface IData {
 }
 
 export function TirageChart() {
-  const [data, setData] = React.useState<IData>({
+  const [data, /* setData */] = React.useState<IData>({
     series: [
       {
         name: "Florida",

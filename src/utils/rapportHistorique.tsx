@@ -105,7 +105,7 @@ interface IData {
 }
 
 export function RapportHistoriques() {
-  const [data, setData] = React.useState<IData>({
+  const [data /* setData */] = React.useState<IData>({
     series: [
       {
         name: "Inflation",

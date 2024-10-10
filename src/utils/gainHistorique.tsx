@@ -57,7 +57,7 @@ interface IData {
 }
 
 export function GainHistorique() {
-  const [data, setData] = React.useState<IData>({
+  const [data /* setData */] = React.useState<IData>({
     series: [
       {
         name: "Florida",

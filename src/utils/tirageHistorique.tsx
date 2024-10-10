@@ -72,7 +72,7 @@ interface IData {
 }
 
 export function TirageHistorique() {
-  const [data, setData] = React.useState<IData>({
+  const [data /* setData */] = React.useState<IData>({
     series: [
       {
         name: "Montant",

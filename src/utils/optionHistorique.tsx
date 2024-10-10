@@ -47,7 +47,7 @@ interface IData {
 }
 
 export function OptionHistorique() {
-  const [data, setData] = React.useState<IData>({
+  const [data /* setData */] = React.useState<IData>({
     series: [
       {
         name: "Series 1",
