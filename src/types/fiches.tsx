@@ -32,6 +32,7 @@ interface IFi {
   tirages: string;
   bank: string;
   lottery: IBL[];
+  gagnant?: boolean;
   dateCreated: string;
   toPaid: number;
 }

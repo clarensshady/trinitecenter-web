@@ -11,29 +11,21 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { Tirages } from "./tirage";
 import __ from "lodash";
-import { balanceLogics } from "./actions";
-import { /* allBank, */ allSurcussale } from "../../utils/mainActions";
+import { allRapport, rapportParAgentVente } from "./actions";
+import { allBank, allTirage } from "../../utils/mainActions";
+import { ClipLoader } from "react-spinners";
 
 interface IStat {
   fiche: number;
-  vente: number;
-  superviseur: number;
-  agent: number;
-  agentInactive: number;
-  agentActive: number;
-  commissions: number;
-  aPaye: number;
-  balance: number;
-  ficheGagnants: number;
+  montant: number;
+  pertes: number;
+  gains: number;
 }
 
 interface IData {
   Tirage: string;
   Agent: string;
-  dateDebut: CalendarDate;
-  dateDeFin: CalendarDate;
 }
 
 interface ISel {
@@ -45,49 +37,68 @@ export function VenteComp() {
   let defaultDate: CalendarDate = today(getLocalTimeZone());
 
   const [dateDebut, setDateDeDebut] = React.useState(defaultDate);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [dateDeFin, setDateDeFin] = React.useState(defaultDate);
-  const [stats, setStat] = React.useState<IStat>({} as IStat);
+  const [stats, setStat] = React.useState<IStat>({
+    fiche: 0,
+    montant: 0,
+    pertes: 0,
+    gains: 0,
+  });
   const [data, setData] = React.useState<IData>({} as IData);
-  const [surcussale, setSurcussale] = React.useState<ISel[]>([]);
-  // const [bank, setBank] = React.useState<ISel[]>([]);
+  const [tirage, setTirage] = React.useState<ISel[]>([]);
+  const [bank, setBank] = React.useState<ISel[]>([]);
 
   const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  React.useEffect(() => {
-    const showStatistics = async () => {
+  const showRapport = React.useCallback(() => {
+    const showRapport = async () => {
       try {
-        const data = await balanceLogics();
-        setStat(data);
+        await rapportParAgentVente(
+          `${data.Agent}`,
+          `${data.Tirage}`,
+          dateDebut,
+          dateDeFin,
+          setStat,
+          setLoading
+        );
       } catch (error) {
         throw new Error(`${error}`);
       }
     };
-    showStatistics();
-  }, []);
+    showRapport();
+  }, [data, dateDebut, dateDeFin]);
 
   React.useEffect(() => {
-    const showSurcu = async () => {
+    const showTirage = async () => {
       try {
-        const surcu = await allSurcussale();
-        setSurcussale(surcu);
+        const tira = await allTirage();
+        setTirage(tira);
       } catch (error) {
         throw new Error(`${error}`);
       }
     };
 
-    /* const showBank = async () => {
+    const showBank = async () => {
       try {
         const bank = await allBank();
         setBank(bank);
       } catch (error) {
         throw new Error(`${error}`);
       }
-    }; */
-
-    showSurcu();
-    // showBank();
+    };
+    showTirage();
+    showBank();
+    const showStatistics = async () => {
+      try {
+        await allRapport(setStat);
+      } catch (error) {
+        throw new Error(`${error}`);
+      }
+    };
+    showStatistics();
   }, []);
 
   return (
@@ -119,7 +130,7 @@ export function VenteComp() {
                 placeholder="Selectionner un Tirage"
                 className="hidden md:max-w-xs md:flex"
               >
-                {Tirages.map((animal) => (
+                {tirage.map((animal) => (
                   <SelectItem key={animal.key}>{animal.label}</SelectItem>
                 ))}
               </Select>
@@ -130,9 +141,9 @@ export function VenteComp() {
                 name="Agent"
                 onChange={onChangeSelect}
               >
-                {surcussale.map((surcu) => (
-                  <SelectItem className="capitalize" key={surcu.key}>
-                    {surcu.label}
+                {bank.map((ba) => (
+                  <SelectItem className="capitalize" key={ba.key}>
+                    {ba.label}
                   </SelectItem>
                 ))}
               </Select>
@@ -158,8 +169,19 @@ export function VenteComp() {
                 variant="shadow"
                 className="py-7 text-lg rounded-md"
                 color="primary"
+                onPress={showRapport}
               >
-                Filtrer
+                {loading ? (
+                  <ClipLoader
+                    color="white"
+                    loading={loading}
+                    size={24}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                ) : (
+                  "Filtrer"
+                )}
               </Button>
             </div>
           </CardBody>
@@ -212,10 +234,10 @@ export function VenteComp() {
                           {value == "Tfiche"
                             ? stats.fiche
                             : value == "Tfiche gagnants"
-                            ? stats.ficheGagnants
+                            ? stats.gains
                             : value == "vente"
-                            ? stats.vente
-                            : stats.aPaye}
+                            ? stats.montant
+                            : stats.pertes}
                         </span>
                       </div>
                     );
@@ -232,9 +254,9 @@ export function VenteComp() {
                           <span className="text-[0.9rem]">
                             {value}:{" "}
                             {value == "%Agent"
-                              ? stats.agent
+                              ? 0
                               : value == "balance avec agent"
-                              ? stats.balance
+                              ? 0
                               : 0}
                           </span>
                         )}
@@ -256,9 +278,9 @@ export function VenteComp() {
                         <span className="text-[0.9rem]">
                           {value}:{" "}
                           {value == "%Superviseur"
-                            ? stats.superviseur
+                            ? 0
                             : value == "balance avec superviseur"
-                            ? stats.balance
+                            ? 0
                             : 0}
                         </span>
                       </div>

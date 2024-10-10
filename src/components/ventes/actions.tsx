@@ -9,10 +9,13 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config";
 import {
+  CalendarDate,
   getLocalTimeZone,
+  parseDateTime,
   toCalendarDate,
   today,
 } from "@internationalized/date";
+import { IFi } from "../../types/fiches";
 
 interface IBL {
   numero: string;
@@ -31,6 +34,263 @@ interface Ifiche {
   isDeleted: boolean;
   surcussale: string;
 }
+
+interface IData {
+  fiche: number;
+  montant: number;
+  pertes: number;
+  gains: number;
+}
+
+const rapportParAgentVente = async (
+  agent: string,
+  tirage: string,
+  dateDebut: CalendarDate,
+  dateDefin: CalendarDate,
+  setData: React.Dispatch<React.SetStateAction<IData>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  try {
+    if (agent == "tout" && tirage == "tout") {
+      const q = query(
+        collection(db, "fiches"),
+        where("isDeleted", "==", false)
+      );
+      setLoading(true);
+      const data = await getDocs(q);
+      if (!data.empty) {
+        const rapport = data.docs.map((fi) => {
+          return {
+            id: fi.id,
+            tirages: fi.data().Tirage,
+            lottery: fi.data().Lottery,
+            gagnant: fi.data().isWinning,
+            dateCreated: fi.data().dateCreated,
+            bank: fi.data().Bank,
+            toPaid: fi.data().toPaid,
+          } as IFi;
+        });
+        setLoading(false);
+        const FicheByDate = rapport.filter(
+          (f) =>
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDebut) >=
+              0 &&
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDefin) <= 0
+        );
+
+        const agentRapport = __.uniq(FicheByDate.map((d) => d.bank));
+        const stats = agentRapport.map((ra) => {
+          const bank = FicheByDate.filter((f) => f.bank == ra);
+          const lottery = bank.map((f) => f.lottery).flat(1);
+          const pertes = __.sum(bank.map((f) => f.toPaid)) ?? 0;
+          const montants = __.sum(lottery.map((f) => f.montant).map(Number));
+          const gains = montants - pertes ?? 0;
+          return {
+            fiche: __.size(FicheByDate.map((a) => a.bank == ra)),
+            montant: montants,
+            pertes: pertes,
+            gains: gains,
+          } as IData;
+        });
+        const Tfiche = __.size(FicheByDate);
+        const vente = __.sum(stats.map((a) => a.montant));
+        const TficheGagnant = __.size(FicheByDate.filter((f) => f.gagnant));
+        const aPaye = __.sum(FicheByDate.map((a) => a.toPaid).map(Number));
+
+        setData({
+          fiche: Tfiche,
+          montant: vente,
+          pertes: aPaye,
+          gains: TficheGagnant,
+        });
+      } else {
+        setLoading(false);
+        setData({
+          fiche: 0,
+          montant: 0,
+          pertes: 0,
+          gains: 0,
+        });
+      }
+    } else if (tirage == "tout" && agent != "tout") {
+      const q = query(
+        collection(db, "fiches"),
+        where("Bank", "==", `${agent}`),
+        where("isDeleted", "==", false)
+      );
+      setLoading(true);
+      const stats = await getDocs(q);
+      if (!stats.empty) {
+        const fich = stats.docs.map((fi) => {
+          return {
+            id: fi.id,
+            tirages: fi.data().Tirage,
+            lottery: fi.data().Lottery,
+            gagnant: fi.data().isWinning,
+            dateCreated: fi.data().dateCreated,
+            toPaid: fi.data().toPaid,
+          };
+        }) as IFi[];
+
+        setLoading(false);
+        const FicheByDate = fich.filter(
+          (f) =>
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDebut) >=
+              0 &&
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDefin) <= 0
+        );
+
+        const fiches = __.size(FicheByDate);
+
+        const lottery = FicheByDate.map((fi) => fi.lottery).flat(1);
+
+        const montants = __.sum(lottery.map((f) => f.montant).map(Number));
+        // pertes
+        const pertes = __.sum(FicheByDate.map((f) => f.toPaid)) ?? 0;
+        // gains
+        const gains = __.size(FicheByDate.filter((f) => f.gagnant));
+        setData({
+          fiche: fiches,
+          montant: montants,
+          pertes,
+          gains,
+        });
+      } else {
+        setLoading(false);
+        setData({
+          fiche: 0,
+          montant: 0,
+          pertes: 0,
+          gains: 0,
+        });
+      }
+    } else {
+      const q = query(
+        collection(db, "fiches"),
+        where("isDeleted", "==", false),
+        where("Tirage", "==", tirage)
+      );
+      setLoading(true);
+      const data = await getDocs(q);
+      if (!data.empty) {
+        const rapport = data.docs.map((fi) => {
+          return {
+            id: fi.id,
+            tirages: fi.data().Tirage,
+            lottery: fi.data().Lottery,
+            gagnant: fi.data().isWinning,
+            dateCreated: fi.data().dateCreated,
+            bank: fi.data().Bank,
+            toPaid: fi.data().toPaid,
+          } as IFi;
+        });
+        setLoading(false);
+        const FicheByDate = rapport.filter(
+          (f) =>
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDebut) >=
+              0 &&
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDefin) <= 0
+        );
+
+        const agentRapport = __.uniq(FicheByDate.map((d) => d.bank));
+        const stats = agentRapport.map((ra) => {
+          const bank = FicheByDate.filter((f) => f.bank == ra);
+          const lottery = bank.map((f) => f.lottery).flat(1);
+          const pertes = __.sum(bank.map((f) => f.toPaid)) ?? 0;
+          const montants = __.sum(lottery.map((f) => f.montant).map(Number));
+          const gains = montants - pertes ?? 0;
+          return {
+            fiche: __.size(FicheByDate.map((a) => a.bank == ra)),
+            montant: montants,
+            pertes: pertes,
+            gains: gains,
+          } as IData;
+        });
+        const Tfiche = __.size(FicheByDate);
+        const vente = __.sum(stats.map((a) => a.montant));
+        const TficheGagnant = __.size(FicheByDate.filter((f) => f.gagnant));
+        const aPaye = __.sum(FicheByDate.map((a) => a.toPaid).map(Number));
+
+        setData({
+          fiche: Tfiche,
+          montant: vente,
+          pertes: aPaye,
+          gains: TficheGagnant,
+        });
+      } else {
+        setLoading(false);
+        setData({
+          fiche: 0,
+          montant: 0,
+          pertes: 0,
+          gains: 0,
+        });
+      }
+    }
+  } catch (error) {
+    setLoading(false);
+    throw new Error(`${error}`);
+  }
+};
+
+const allRapport = async (
+  setData: React.Dispatch<React.SetStateAction<IData>>
+) => {
+  try {
+    const gdate = toCalendarDate(today(getLocalTimeZone()));
+    const d = new Date(gdate.toString());
+
+    const q = query(
+      collection(db, "fiches"),
+      where("isDeleted", "==", false),
+      where("timestamp", ">=", d)
+    );
+
+    const data = await getDocs(q);
+    if (!data.empty) {
+      const rapport = data.docs.map((fi) => {
+        return {
+          id: fi.id,
+          tirages: fi.data().Tirage,
+          lottery: fi.data().Lottery,
+          gagnant: fi.data().isWinning,
+          dateCreated: fi.data().dateCreated,
+          bank: fi.data().Bank,
+          toPaid: fi.data().toPaid,
+        } as IFi;
+      });
+
+      const agentRapport = __.uniq(rapport.map((d) => d.bank));
+      const stats = agentRapport.map((ra) => {
+        const bank = rapport.filter((f) => f.bank == ra);
+        const lottery = bank.map((f) => f.lottery).flat(1);
+        const pertes = __.sum(bank.map((f) => f.toPaid)) ?? 0;
+        const montants = __.sum(lottery.map((f) => f.montant).map(Number));
+        const gains = montants - pertes ?? 0;
+        return {
+          fiche: __.size(rapport.map((a) => a.bank == ra)),
+          montant: montants,
+          pertes: pertes,
+          gains: gains,
+        } as IData;
+      });
+
+      const Tfiche = __.size(rapport);
+      const vente = __.sum(stats.map((a) => a.montant));
+      const TficheGagnant = __.size(rapport.filter((f) => f.gagnant));
+      const aPaye = __.sum(rapport.map((a) => a.toPaid).map(Number));
+
+      setData({
+        fiche: Tfiche,
+        montant: vente,
+        pertes: aPaye,
+        gains: TficheGagnant,
+      });
+    }
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
 
 const balanceLogics = async () => {
   try {
@@ -331,4 +591,10 @@ const StatisticsLot = (
   return data;
 };
 
-export { aPayeLogics, balanceLogics, StatisticsLot };
+export {
+  aPayeLogics,
+  balanceLogics,
+  StatisticsLot,
+  rapportParAgentVente,
+  allRapport,
+};

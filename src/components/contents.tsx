@@ -1,4 +1,11 @@
-import { Avatar, Button, Card, CardBody } from "@nextui-org/react";
+import {
+  Accordion,
+  AccordionItem,
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+} from "@nextui-org/react";
 import Georgia from "../assets/GeorgiaL.png";
 import NewYork from "../assets/new_york.png";
 import Florida from "../assets/Florida.jpeg";
@@ -9,6 +16,11 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config";
 import TableLotGagnant from "./gagnant/gagnant";
 import { balanceLogics } from "./ventes/actions";
+import { TirageChart } from "../utils/tirageChart";
+import { TirageHistorique } from "../utils/tirageHistorique";
+import { GainHistorique } from "../utils/gainHistorique";
+import { RapportHistoriques } from "../utils/rapportHistorique";
+import { OptionHistorique } from "../utils/optionHistorique";
 
 interface IList {
   tirage: string;
@@ -31,7 +43,18 @@ interface IStat {
 export function Content() {
   const [boules, setBoule] = React.useState<IList[]>([]);
   // const [loading, setLoading] = React.useState<boolean>(false);
-  const [stats, setStat] = React.useState<IStat>({} as IStat);
+  const [stats, setStat] = React.useState<IStat>({
+    fiche: 0,
+    vente: 0,
+    superviseur: 0,
+    agent: 0,
+    agentInactive: 0,
+    agentActive: 0,
+    commissions: 0,
+    aPaye: 0,
+    balance: 0,
+    ficheGagnants: 0,
+  });
 
   const tirageRef = collection(db, "lotGagnants");
 
@@ -398,7 +421,7 @@ export function Content() {
               </CardBody>
             </Card>
           </div>
-          <div className="flex-1 min-w-[200px]">
+          <div className="flex-1 min-w-[170px]">
             <Card shadow="none" className="bg-blue-500">
               <CardBody>
                 <div className="flex flex-col gap-1 py-3">
@@ -437,11 +460,14 @@ export function Content() {
           </div>
         </div>
         {/* first report */}
-        <div className="w-full flex-wrap flex gap-7 mt-6">
+        <div className="w-full flex-wrap flex gap-4 mt-6">
           <div className="flex-1 min-w-[340px]">
-            <Card>
-              <CardBody>
-                <div className="flex justify-between">
+            <Accordion fullWidth={true} isCompact variant="splitted">
+              <AccordionItem
+                disableIndicatorAnimation
+                key="1"
+                aria-label="Accordion 1"
+                title={
                   <div>
                     <div>
                       <span className="font-bold text-lg">
@@ -454,25 +480,30 @@ export function Content() {
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faRotateRight} />}
-                      color="primary"
-                      size="md"
-                      className="text-md"
-                      variant="shadow"
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+                }
+                indicator={
+                  <Button
+                    startContent={<FontAwesomeIcon icon={faRotateRight} />}
+                    color="primary"
+                    size="md"
+                    className="text-md"
+                    variant="shadow"
+                  >
+                    Refresh
+                  </Button>
+                }
+              >
+                <TirageChart />
+              </AccordionItem>
+            </Accordion>
           </div>
           <div className="flex-1 min-w-[340px]">
-            <Card>
-              <CardBody>
-                <div className="flex justify-between">
+            <Accordion isCompact variant="splitted">
+              <AccordionItem
+                disableIndicatorAnimation
+                key="1"
+                aria-label="Accordion 1"
+                title={
                   <div>
                     <div>
                       <span className="font-bold text-lg">
@@ -485,28 +516,33 @@ export function Content() {
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faRotateRight} />}
-                      color="primary"
-                      size="md"
-                      className="text-md"
-                      variant="shadow"
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+                }
+                indicator={
+                  <Button
+                    startContent={<FontAwesomeIcon icon={faRotateRight} />}
+                    color="primary"
+                    size="md"
+                    className="text-md"
+                    variant="shadow"
+                  >
+                    Refresh
+                  </Button>
+                }
+              >
+                <TirageHistorique />
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
         {/* second report */}
-        <div className="w-full flex flex-wrap gap-7 mt-6">
+        <div className="w-full flex flex-wrap gap-4 mt-6">
           <div className="flex-1 min-w-[340px]">
-            <Card>
-              <CardBody>
-                <div className="flex justify-between">
+            <Accordion isCompact variant="splitted">
+              <AccordionItem
+                disableIndicatorAnimation
+                key="1"
+                aria-label="Accordion 1"
+                title={
                   <div>
                     <div>
                       <span className="font-bold text-lg">
@@ -519,25 +555,30 @@ export function Content() {
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faRotateRight} />}
-                      color="primary"
-                      size="md"
-                      className="text-md"
-                      variant="shadow"
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+                }
+                indicator={
+                  <Button
+                    startContent={<FontAwesomeIcon icon={faRotateRight} />}
+                    color="primary"
+                    size="md"
+                    className="text-md"
+                    variant="shadow"
+                  >
+                    Refresh
+                  </Button>
+                }
+              >
+                <GainHistorique />
+              </AccordionItem>
+            </Accordion>
           </div>
           <div className="flex-1 min-w-[340px]">
-            <Card>
-              <CardBody>
-                <div className="flex gap-12 justify-between">
+            <Accordion isCompact variant="splitted">
+              <AccordionItem
+                disableIndicatorAnimation
+                key="1"
+                aria-label="Accordion 1"
+                title={
                   <div>
                     <div>
                       <span className="font-bold text-lg">
@@ -550,28 +591,33 @@ export function Content() {
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faRotateRight} />}
-                      color="primary"
-                      size="md"
-                      className="text-md"
-                      variant="shadow"
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+                }
+                indicator={
+                  <Button
+                    startContent={<FontAwesomeIcon icon={faRotateRight} />}
+                    color="primary"
+                    size="md"
+                    className="text-md"
+                    variant="shadow"
+                  >
+                    Refresh
+                  </Button>
+                }
+              >
+                <RapportHistoriques />
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
         {/* third report */}
-        <div className="mt-3">
-          <div className="flex-1">
-            <Card>
-              <CardBody>
-                <div className="flex gap-4 justify-between">
+        <div className="w-full flex flex-wrap gap-4 mt-6 md:mt-4">
+          <div className="flex-1 min-w-[340px]">
+            <Accordion isCompact variant="splitted">
+              <AccordionItem
+                disableIndicatorAnimation
+                key="1"
+                aria-label="Accordion 1"
+                title={
                   <div>
                     <div>
                       <span className="font-bold text-lg">
@@ -580,25 +626,28 @@ export function Content() {
                     </div>
                     <div className="mt-2">
                       <span className="text-slate-500 text-sm">
-                        toutes les montants
+                        toutes les montants par option
                       </span>
                     </div>
                   </div>
-                  <div>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faRotateRight} />}
-                      color="primary"
-                      size="md"
-                      className="text-md"
-                      variant="shadow"
-                    >
-                      Refresh
-                    </Button>
-                  </div>
-                </div>
-              </CardBody>
-            </Card>
+                }
+                indicator={
+                  <Button
+                    startContent={<FontAwesomeIcon icon={faRotateRight} />}
+                    color="primary"
+                    size="md"
+                    className="text-md"
+                    variant="shadow"
+                  >
+                    Refresh
+                  </Button>
+                }
+              >
+                <OptionHistorique />
+              </AccordionItem>
+            </Accordion>
           </div>
+          <div className="flex-1 min-w-[340px]"></div>
         </div>
       </div>
     </div>
