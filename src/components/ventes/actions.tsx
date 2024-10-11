@@ -164,11 +164,75 @@ const rapportParAgentVente = async (
           gains: 0,
         });
       }
-    } else {
+    } else if (tirage != "tout" && agent == "tout") {
       const q = query(
         collection(db, "fiches"),
         where("isDeleted", "==", false),
         where("Tirage", "==", tirage)
+      );
+      setLoading(true);
+      const data = await getDocs(q);
+      if (!data.empty) {
+        const rapport = data.docs.map((fi) => {
+          return {
+            id: fi.id,
+            tirages: fi.data().Tirage,
+            lottery: fi.data().Lottery,
+            gagnant: fi.data().isWinning,
+            dateCreated: fi.data().dateCreated,
+            bank: fi.data().Bank,
+            toPaid: fi.data().toPaid,
+          } as IFi;
+        });
+        setLoading(false);
+        const FicheByDate = rapport.filter(
+          (f) =>
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDebut) >=
+              0 &&
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDefin) <= 0
+        );
+
+        const agentRapport = __.uniq(FicheByDate.map((d) => d.bank));
+        const stats = agentRapport.map((ra) => {
+          const bank = FicheByDate.filter((f) => f.bank == ra);
+          const lottery = bank.map((f) => f.lottery).flat(1);
+          const pertes = __.sum(bank.map((f) => f.toPaid)) ?? 0;
+          const montants = __.sum(lottery.map((f) => f.montant).map(Number));
+          const gains = montants - pertes ?? 0;
+          return {
+            fiche: __.size(FicheByDate.map((a) => a.bank == ra)),
+            montant: montants,
+            pertes: pertes,
+            gains: gains,
+          } as IData;
+        });
+        const Tfiche = __.size(FicheByDate);
+        const vente = __.sum(stats.map((a) => a.montant));
+        const TficheGagnant = __.size(FicheByDate.filter((f) => f.gagnant));
+        const aPaye = __.sum(FicheByDate.map((a) => a.toPaid).map(Number));
+
+        setData({
+          fiche: Tfiche,
+          montant: vente,
+          pertes: aPaye,
+          gains: TficheGagnant,
+        });
+      } else {
+        setLoading(false);
+        setData({
+          fiche: 0,
+          montant: 0,
+          pertes: 0,
+          gains: 0,
+        });
+      }
+    } else {
+      // for the tirage and agent not equal tout
+      const q = query(
+        collection(db, "fiches"),
+        where("Bank", "==", agent),
+        where("Tirage", "==", tirage),
+        where("isDeleted", "==", false)
       );
       setLoading(true);
       const data = await getDocs(q);
