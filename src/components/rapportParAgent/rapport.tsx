@@ -117,7 +117,7 @@ export function RapportComp() {
               </div>
               <Button
                 variant="shadow"
-                className="hidden sm:block py-7 text-lg rounded-md"
+                className="hidden sm:flex py-7 text-lg rounded-md"
                 color="primary"
                 onClick={filterAgent}
               >
