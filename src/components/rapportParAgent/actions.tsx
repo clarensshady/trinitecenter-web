@@ -30,6 +30,9 @@ const rapportParAgent = async (
       const q = collection(db, "fiches");
       setLoading(true);
       const data = await getDocs(q);
+      if (data.empty) {
+        setLoading(false);
+      }
       if (!data.empty) {
         const rapport = data.docs.map((fi) => {
           return {
@@ -76,6 +79,9 @@ const rapportParAgent = async (
       );
       setLoading(true);
       const stats = await getDocs(q);
+      if (stats.empty) {
+        setLoading(false);
+      }
       if (!stats.empty) {
         const fich = stats.docs.map((fi) => {
           return {
