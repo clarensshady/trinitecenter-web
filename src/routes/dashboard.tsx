@@ -311,7 +311,6 @@ export default function Dashboard() {
         >
           <div className="w-full">
             <HomeNavbar {...navbar} />
-
             <div>
               <Outlet />
             </div>
