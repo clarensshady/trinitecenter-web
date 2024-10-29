@@ -177,7 +177,7 @@ export function LotGagnantComp() {
                         <Input
                           name="Lotto31eLot"
                           onChange={onChange}
-                          value={data.Lotto31etLot}
+                          value={data.Lotto31eLot}
                           label="Lotto3 et 1er Lot"
                           placeholder="Entrer Lotto3 et 1er Lot"
                           type="text"
