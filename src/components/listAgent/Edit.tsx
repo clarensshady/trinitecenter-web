@@ -75,8 +75,8 @@ export function EditAgent() {
       await updateDoc(doc(db, "Vendeur", `${params.id}`), {
         ...data,
         dateDeNaissance: birth?.toString(),
-        ...selectData,
         block: blocked,
+        ...selectData,
       });
       setLoading(false);
       setFinish(true);
@@ -107,7 +107,7 @@ export function EditAgent() {
             AddresseComplete: Agent.data().AddresseComplet,
             MotDePasse: Agent.data().MotDePasse,
             AndroidId: Agent.data().AndroidId,
-            Commission: Agent.data().Commision,
+            Commission: Agent.data().Commission,
           });
           setBirth(parseDate(Agent.data().dateDeNaissance));
           setBlock(Agent.data().block == true ? true : false);
