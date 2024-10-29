@@ -395,9 +395,7 @@ export function Content() {
                     <span className="text-sm text-white">Commissions</span>
                   </div>
                   <div>
-                    <span className="font-bold text-2xl text-white">
-                      {stats.commissions}
-                    </span>
+                    <span className="font-bold text-2xl text-white">0</span>
                   </div>
                 </div>
               </CardBody>

@@ -6,6 +6,7 @@ import {
   where,
   getDoc,
   doc,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../../config";
 import {
@@ -306,8 +307,9 @@ const allRapport = async (
 
     const q = query(
       collection(db, "fiches"),
-      where("isDeleted", "==", false),
-      where("timestamp", ">=", d)
+      orderBy("timestamp", "desc"),
+      where("timestamp", ">=", d),
+      where("isDeleted", "==", false)
     );
 
     const data = await getDocs(q);
@@ -363,6 +365,7 @@ const balanceLogics = async () => {
 
     const q = query(
       collection(db, "fiches"),
+      orderBy("timestamp", "desc"),
       where("timestamp", ">=", d),
       where("isDeleted", "==", false)
     );
@@ -433,7 +436,7 @@ const balanceLogics = async () => {
       data.aPaye = aPaye;
       data.agentInactive = inactiveAgent;
       data.agentActive = playAgent;
-      data.commissions = __.sum(commissions);
+      data.commissions = __.sum(commissions) ?? 0;
       data.balance = vente - aPaye;
       data.ficheGagnants = ficheGagnant;
     }

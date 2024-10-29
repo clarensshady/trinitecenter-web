@@ -47,6 +47,7 @@ export function EditLogGagnant() {
       setLoading(true);
       await updateDoc(docRef, {
         ...data,
+
         Tirage: __.toLower(data.Tirage),
         date: `${dateDuTirage?.toString()}`,
       });
@@ -66,7 +67,7 @@ export function EditLogGagnant() {
         if (gagnants.exists()) {
           setData({
             Tirage: gagnants.data().Tirage,
-            Lotto31etLot: gagnants.data().Lotto31eLot,
+            Lotto31eLot: gagnants.data().Lotto31eLot,
             SecondLot: gagnants.data().SecondLot,
             ThirdLot: gagnants.data().ThirdLot,
           });
@@ -151,8 +152,8 @@ export function EditLogGagnant() {
                       <Input
                         name="Lotto31eLot"
                         onChange={onChange}
-                        value={data.Lotto31etLot}
-                        defaultValue={data.Lotto31etLot}
+                        value={data.Lotto31eLot}
+                        defaultValue={data.Lotto31eLot}
                         label="Lotto3 et 1er Lot"
                         placeholder="Entrer Lotto3 et 1er Lot"
                         type="text"

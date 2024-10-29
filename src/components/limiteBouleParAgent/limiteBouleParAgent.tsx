@@ -24,7 +24,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useMediaQuery } from "@reactuses/core";
-import { allBank, someTirage } from "../../utils/mainActions";
+import { someBank, someTirage } from "../../utils/mainActions";
 
 interface ISel {
   key: string;
@@ -94,7 +94,7 @@ export function LimiteBouleParAgentComp() {
   React.useEffect(() => {
     const showBank = async () => {
       try {
-        const bank = await allBank();
+        const bank = await someBank();
         setBank(bank);
       } catch (error) {
         throw new Error(`${error}`);

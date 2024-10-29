@@ -37,7 +37,6 @@ export function SurveillanceAc({ setMenuOpen }: IConfigurationProps) {
         <ListboxItem
           onClick={() => {
             setMenuOpen(false);
-            alert("good");
           }}
           className="space-x-3"
           startContent={

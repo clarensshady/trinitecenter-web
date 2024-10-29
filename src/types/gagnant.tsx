@@ -8,7 +8,7 @@ interface IGagnant {
 
 interface IAdd {
   Tirage: string;
-  Lotto31etLot: string;
+  Lotto31eLot: string;
   SecondLot: string;
   ThirdLot: string;
 }
