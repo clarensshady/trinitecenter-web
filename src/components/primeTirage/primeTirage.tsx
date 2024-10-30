@@ -81,7 +81,7 @@ export function PrimeParTirage() {
   }, [isFinished]);
 
   React.useEffect(() => {
-    const PG = doc(db, "primeGenerale", "gBPDkpE92Qqr9a997uFH");
+    const PG = doc(db, "primeTirage", "MKUTpZScG5WQKDuLdK7j");
 
     const allPrimeGenerale = async () => {
       try {

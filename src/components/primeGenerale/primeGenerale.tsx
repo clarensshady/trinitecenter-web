@@ -27,7 +27,7 @@ export function PrimeTirageComp() {
     setData({ ...data, [name]: event.target.value });
   };
 
-  const PGdoc = doc(db, "primeGenerale", "gBPDkpE92Qqr9a997uFH");
+  const PGdoc = doc(db, "primeGenerale", "slWTegZ0f1uy1l8xJecw");
   const configurer = async () => {
     try {
       setLoading(true);
@@ -42,7 +42,7 @@ export function PrimeTirageComp() {
   };
 
   React.useEffect(() => {
-    const PG = doc(db, "primeGenerale", "gBPDkpE92Qqr9a997uFH");
+    const PG = doc(db, "primeGenerale", "slWTegZ0f1uy1l8xJecw");
 
     const allPrimeGenerale = async () => {
       try {

@@ -84,7 +84,7 @@ export function PrimeParAgent() {
   }, [isFinished]);
 
   React.useEffect(() => {
-    const PG = doc(db, "primeGenerale", "gBPDkpE92Qqr9a997uFH");
+    const PG = doc(db, "PrimeAgent", "4BujtRhd1jM7I0cIep9G");
 
     const allPrimeGenerale = async () => {
       try {
