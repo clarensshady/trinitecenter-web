@@ -20,7 +20,7 @@ import * as React from "react";
 import AgentTableTirage from "./agentTableTirage";
 import { IParTirage } from "../../types/PrimeGenerale";
 import { db } from "../../config";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { someTirage } from "../../utils/mainActions";

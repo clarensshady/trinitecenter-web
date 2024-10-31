@@ -19,7 +19,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import { IPrime } from "../../types/PrimeGenerale";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../config";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
