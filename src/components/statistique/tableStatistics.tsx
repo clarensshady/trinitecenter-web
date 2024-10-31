@@ -92,7 +92,7 @@ export default function TableStatistics({
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [stats, setStat] = React.useState<IStatTirage[]>([]);
-  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(5);
+  const [rowsPerPage /* setRowsPerPage */] = React.useState<number>(15);
 
   const [page, setPage] = React.useState(1);
 
