@@ -84,9 +84,9 @@ export function PrimeParAgent() {
   }, [isFinished]);
 
   React.useEffect(() => {
-    const PG = doc(db, "PrimeAgent", "4BujtRhd1jM7I0cIep9G");
+    // const PG = doc(db, "PrimeAgent", "4BujtRhd1jM7I0cIep9G");
 
-    const allPrimeGenerale = async () => {
+    /* const allPrimeGenerale = async () => {
       try {
         const primeAgent = await getDoc(PG);
         if (primeAgent.exists()) {
@@ -103,7 +103,7 @@ export function PrimeParAgent() {
         throw new Error(`${error}`);
       }
     };
-    allPrimeGenerale();
+    allPrimeGenerale(); */
 
     const showBank = async () => {
       try {
@@ -213,7 +213,6 @@ export function PrimeParAgent() {
                               name="tirage1"
                               type="text"
                               label="Tirage 1"
-                              defaultValue="50"
                               className="w-xs"
                             />
                             <Input
@@ -223,7 +222,6 @@ export function PrimeParAgent() {
                               onChange={onChange}
                               type="text"
                               label="Tirage 2"
-                              defaultValue="20"
                               className="w-xs"
                             />
                           </div>
@@ -235,7 +233,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Tirage 3"
-                              defaultValue="10"
                               className="w-xs"
                             />
                             <Input
@@ -245,7 +242,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Mariage"
-                              defaultValue="1000"
                               className="w-xs"
                             />
                           </div>
@@ -257,7 +253,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 3"
-                              defaultValue="500"
                               className="w-xs"
                             />
                             <Input
@@ -267,7 +262,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 4 op1"
-                              defaultValue="5000"
                               className="w-xs"
                             />
                           </div>
@@ -279,7 +273,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 4 op2"
-                              defaultValue="5000"
                               className="w-xs"
                             />
                             <Input
@@ -289,7 +282,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 4 op3"
-                              defaultValue="5000"
                               className="w-xs"
                             />
                           </div>
@@ -301,7 +293,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 5 op1"
-                              defaultValue="25000"
                               className="w-xs"
                             />
                             <Input
@@ -311,7 +302,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 5 op2"
-                              defaultValue="25000"
                               className="w-xs"
                             />
                           </div>
@@ -323,7 +313,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Lotto 5 op3"
-                              defaultValue="25000"
                               className="w-xs"
                             />
                             <Input
@@ -333,7 +322,6 @@ export function PrimeParAgent() {
                               isRequired
                               type="text"
                               label="Mariage gratuit"
-                              defaultValue="500"
                               className="w-xs"
                             />
                           </div>

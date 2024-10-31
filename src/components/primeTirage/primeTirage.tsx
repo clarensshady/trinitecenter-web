@@ -81,9 +81,9 @@ export function PrimeParTirage() {
   }, [isFinished]);
 
   React.useEffect(() => {
-    const PG = doc(db, "primeTirage", "MKUTpZScG5WQKDuLdK7j");
+    // const PG = doc(db, "primeTirage", "MKUTpZScG5WQKDuLdK7j");
 
-    const allPrimeGenerale = async () => {
+    /* const allPrimeGenerale = async () => {
       try {
         const primeGen = await getDoc(PG);
         if (primeGen.exists()) {
@@ -99,7 +99,7 @@ export function PrimeParTirage() {
         throw new Error(`${error}`);
       }
     };
-    allPrimeGenerale();
+    allPrimeGenerale(); */
 
     const showTirage = async () => {
       try {
@@ -184,7 +184,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Tirage 1"
-                            defaultValue="50"
+                            /* defaultValue="50" */
                             className="w-xs"
                           />
                           <Input
@@ -193,7 +193,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Tirage 2"
-                            defaultValue="20"
+                            /* defaultValue="20" */
                             className="w-xs"
                           />
                         </div>
@@ -204,7 +204,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Tirage 3"
-                            defaultValue="10"
+                            /*  defaultValue="10" */
                             className="w-xs"
                           />
                           <Input
@@ -213,7 +213,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Mariage"
-                            defaultValue="1000"
+                            /* defaultValue="1000" */
                             className="w-xs"
                           />
                         </div>
@@ -224,7 +224,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 3"
-                            defaultValue="500"
+                            /* defaultValue="500" */
                             className="w-xs"
                           />
                           <Input
@@ -233,7 +233,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 4 op1"
-                            defaultValue="5000"
+                            /* defaultValue="5000" */
                             className="w-xs"
                           />
                         </div>
@@ -244,7 +244,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 4 op2"
-                            defaultValue="5000"
+                            /* defaultValue="5000" */
                             className="w-xs"
                           />
                           <Input
@@ -253,7 +253,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 4 op3"
-                            defaultValue="5000"
+                            /* defaultValue="5000" */
                             className="w-xs"
                           />
                         </div>
@@ -264,7 +264,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 5 op1"
-                            defaultValue="25000"
+                            /* defaultValue="25000" */
                             className="w-xs"
                           />
                           <Input
@@ -273,7 +273,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 5 op2"
-                            defaultValue="25000"
+                            /* defaultValue="25000" */
                             className="w-xs"
                           />
                         </div>
@@ -284,7 +284,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Lotto 5 op3"
-                            defaultValue="25000"
+                            /* defaultValue="25000" */
                             className="w-xs"
                           />
                           <Input
@@ -293,7 +293,7 @@ export function PrimeParTirage() {
                             isRequired
                             type="text"
                             label="Mariage gratuit"
-                            defaultValue="500"
+                            /* defaultValue="500" */
                             className="w-xs"
                           />
                         </div>
