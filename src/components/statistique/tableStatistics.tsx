@@ -23,6 +23,7 @@ import { db } from "../../config";
 import {
   Time,
   parseDateTime,
+  parseTime,
   toCalendarDate,
   toCalendarDateTime,
   toTime,
@@ -97,15 +98,16 @@ export default function TableStatistics({
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
+  console.log("tirage", Tirage, Agent, Surcussale);
 
   React.useEffect(() => {
     const showStatistics = async () => {
       try {
         const q = query(
           collection(db, "fiches"),
-          where("Tirage", "==", `${Tirage}`),
-          where("Surcussale", "==", `${Surcussale?.toLowerCase()}`),
+          where("Tirage", "==", `${Tirage?.toLowerCase()}`),
           where("Bank", "==", `${Agent}`)
+          // where("Surcussale", "==", `${Surcussale?.toLowerCase()}`)
         );
 
         setLoading(true);
@@ -123,7 +125,7 @@ export default function TableStatistics({
         const primeAgent = await getDocs(firstQuery);
         const primeTirage = await getDocs(secondQuery);
         const PrimeGenerale = await getDoc(
-          doc(db, "primeGenerale", "gBPDkpE92Qqr9a997uFH")
+          doc(db, "primeGenerale", "slWTegZ0f1uy1l8xJecw")
         );
 
         const pAgent = primeAgent.docs.map((f) => f.data()) as Ilotto[];
@@ -152,12 +154,22 @@ export default function TableStatistics({
 
           setLoading(false);
 
-          const lottery = statistics[0].Lottery;
+          // const lottery = statistics[0].Lottery;
+          const stat = statistics.filter(
+            (res) =>
+              toCalendarDate(parseDateTime(`${res.date}`)).compare(
+                DateDuFiche
+              ) == 0 &&
+              toTime(parseDateTime(`${res.date}`).set({ second: 0 })).compare(
+                HeureDuFiche
+              ) == 0
+          )[0];
+          const lottery = stat.Lottery;
 
           const result = lottery.map((lot) => {
             //
             const date = toCalendarDateTime(
-              parseDateTime(`${statistics[0].date}`).set({ second: 0 })
+              parseDateTime(`${stat.date}`).set({ second: 0 })
             );
 
             const premierLot = StatisticsLot(
@@ -189,7 +201,7 @@ export default function TableStatistics({
 
             return {
               id: `${Math.random() * 1000}`,
-              tirage: statistics[0].Tirage,
+              tirage: stat.Tirage,
               date: `${date}`,
               lotto: lot.borlette,
               boules: lot.numero,
@@ -202,17 +214,7 @@ export default function TableStatistics({
           });
           setLoading(false);
 
-          setStat(
-            result.filter(
-              (res) =>
-                toCalendarDate(parseDateTime(`${res.date}`)).compare(
-                  DateDuFiche
-                ) == 0 &&
-                toTime(parseDateTime(`${res.date}`).set({ second: 0 })).compare(
-                  HeureDuFiche
-                ) == 0
-            )
-          );
+          setStat(result);
         }
       } catch (error) {
         setLoading(false);

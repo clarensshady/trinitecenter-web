@@ -22,7 +22,7 @@ import { db } from "../../config";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { allBank, someTirage } from "../../utils/mainActions";
+import { allBank, allTirage } from "../../utils/mainActions";
 import { useMediaQuery } from "@reactuses/core";
 
 export interface ISupervisorCompProps {}
@@ -97,7 +97,7 @@ export function BlocageBouleComp() {
 
     const showTirage = async () => {
       try {
-        const tirage = await someTirage();
+        const tirage = await allTirage();
         setTirage(tirage);
       } catch (error) {
         throw new Error(`${error}`);

@@ -23,7 +23,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../config";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import { someBank, someTirage } from "../../utils/mainActions";
+import { someBank, allTirage } from "../../utils/mainActions";
 import { useMediaQuery } from "@reactuses/core";
 
 export interface IPrimeParAgentProps {}
@@ -116,7 +116,7 @@ export function PrimeParAgent() {
 
     const showTirage = async () => {
       try {
-        const tirage = await someTirage();
+        const tirage = await allTirage();
         setTirage(tirage);
       } catch (error) {
         throw new Error(`${error}`);

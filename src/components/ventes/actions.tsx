@@ -514,6 +514,7 @@ const StatisticsLot = (
   montant: number,
   type: string
 ) => {
+  console.log("second");
   const data = { aPaye: 0 };
   if (!__.isEmpty(PrimeAgent) && !__.isUndefined(PrimeAgent)) {
     //  best caculation for borlette result wise
@@ -567,6 +568,7 @@ const StatisticsLot = (
     __.isUndefined(PrimeAgent)
   ) {
     //  best caculation for borlette result wise
+    console.log("third");
     if (borlette == "borlette") {
       if (type == "1er lot") {
         data.aPaye = PrimeTirage[0].tirage1 * montant;
@@ -611,6 +613,7 @@ const StatisticsLot = (
       data.aPaye = PrimeTirage[0].Mariage * montant;
     }
   } else {
+    console.log("first");
     if (borlette == "borlette") {
       if (type == "1er lot") {
         data.aPaye = PrimeGenerale.tirage1 * montant;

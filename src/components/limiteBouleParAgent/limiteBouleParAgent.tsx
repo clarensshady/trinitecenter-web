@@ -24,7 +24,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useMediaQuery } from "@reactuses/core";
-import { someBank, someTirage } from "../../utils/mainActions";
+import { someBank, allTirage } from "../../utils/mainActions";
 
 interface ISel {
   key: string;
@@ -104,7 +104,7 @@ export function LimiteBouleParAgentComp() {
 
     const showTirage = async () => {
       try {
-        const tirage = await someTirage();
+        const tirage = await allTirage();
         setNTirage(tirage);
       } catch (error) {
         throw new Error(`${error}`);

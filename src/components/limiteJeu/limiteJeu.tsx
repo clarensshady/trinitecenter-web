@@ -24,7 +24,7 @@ import { db } from "../../config";
 import { addDoc, collection } from "firebase/firestore";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import { someTirage } from "../../utils/mainActions";
+import { allTirage } from "../../utils/mainActions";
 import { useMediaQuery } from "@reactuses/core";
 
 export interface ISupervisorCompProps {}
@@ -91,7 +91,7 @@ export function LimiteJeuComp() {
   React.useEffect(() => {
     const showTirage = async () => {
       try {
-        const tirage = await someTirage();
+        const tirage = await allTirage();
         setTirage(tirage);
       } catch (error) {
         throw new Error(`${error}`);

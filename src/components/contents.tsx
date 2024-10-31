@@ -97,6 +97,7 @@ export function Content() {
     allTirages();
     showStatistics();
   }, []);
+  console.log(boules);
 
   return (
     <div className="w-full">
@@ -321,9 +322,7 @@ export function Content() {
                       <div className="flex gap-[0.17rem]">
                         {boules.length > 1
                           ? boules
-                              .filter(
-                                (boule) => boule.tirage === "georgia matin"
-                              )
+                              .filter((boule) => boule.tirage === "georgia midi")
                               .map((lb) => lb.listBoule)[0]
                               ?.split("-")
                               .map((b, index) => {

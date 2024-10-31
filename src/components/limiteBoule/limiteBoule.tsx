@@ -24,7 +24,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useMediaQuery } from "@reactuses/core";
-import { someTirage } from "../../utils/mainActions";
+import { allTirage } from "../../utils/mainActions";
 
 export interface ISupervisorCompProps {}
 interface ISel {
@@ -90,7 +90,7 @@ export function LimiteBouleComp() {
   React.useEffect(() => {
     const showTirage = async () => {
       try {
-        const tirage = await someTirage();
+        const tirage = await allTirage();
         setNTirage(tirage);
       } catch (error) {
         throw new Error(`${error}`);
