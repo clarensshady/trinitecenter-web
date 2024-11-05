@@ -159,11 +159,7 @@ export default function FicheGagnantTable() {
               apeyé: doc.data().toPaid,
             } as IFicheGagnant;
           });
-          setFiche(
-            allFiches.filter(
-              (f) => toCalendarDate(parseDateTime(f.date)).compare(gdate) >= 0
-            )
-          );
+          setFiche(allFiches);
         });
         setLoading(false);
       } catch (error) {

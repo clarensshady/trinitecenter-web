@@ -64,6 +64,23 @@ interface IData {
   }
 }; */
 
+const ficheGagnant = async () => {
+  try {
+    const col = collection(db, "lotGagnants");
+    const lotGagnants = await getDocs(col);
+    const lot = lotGagnants.docs.map((f) => f.data());
+
+    const fiches = await getDocs(collection(db, "fiches"));
+
+    const gagnant = fiches.docs.map((doc) => {
+      const allLots = lot.find((l) => l.Tirage == doc.data().Tirage);
+      // const data =
+    });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
 const rapportParAgentVente = async (
   agent: string,
   tirage: string,
