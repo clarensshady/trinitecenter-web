@@ -132,6 +132,7 @@ export default function FicheGagnantTable() {
   React.useEffect(() => {
     const showFiche = async () => {
       try {
+        const gdate = toCalendarDate(today(getLocalTimeZone()));
         const q = query(
           collection(db, "fiches"),
           where("isWinning", "==", true)
@@ -158,7 +159,11 @@ export default function FicheGagnantTable() {
               apeyé: doc.data().toPaid,
             } as IFicheGagnant;
           });
-          setFiche(allFiches);
+          setFiche(
+            allFiches.filter(
+              (f) => toCalendarDate(parseDateTime(f.date)).compare(gdate) >= 0
+            )
+          );
         });
         setLoading(false);
       } catch (error) {

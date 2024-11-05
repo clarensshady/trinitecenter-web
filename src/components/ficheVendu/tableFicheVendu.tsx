@@ -139,6 +139,7 @@ export default function FicheVenduTable() {
   React.useEffect(() => {
     const showFiche = async () => {
       try {
+        const gdate = toCalendarDate(today(getLocalTimeZone()));
         const q = query(
           collection(db, "fiches"),
           where("isDeleted", "==", false)
@@ -165,7 +166,11 @@ export default function FicheVenduTable() {
               gagnant: doc.data().isWinning,
             } as IFicheVendu;
           });
-          setFiche(allFiches);
+          setFiche(
+            allFiches.filter(
+              (f) => toCalendarDate(parseDateTime(f.date)).compare(gdate) >= 0
+            )
+          );
         });
         setLoading(false);
       } catch (error) {

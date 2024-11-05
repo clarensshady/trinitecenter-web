@@ -127,6 +127,7 @@ export default function FicheElimineTable() {
   React.useEffect(() => {
     const showFiche = async () => {
       try {
+        const gdate = toCalendarDate(today(getLocalTimeZone()));
         const q = query(
           collection(db, "fiches"),
           where("isDeleted", "==", true)
@@ -152,7 +153,11 @@ export default function FicheElimineTable() {
               apeyé: doc.data().toPaid,
             } as IFicheGagnant;
           });
-          setFiche(allFiches);
+          setFiche(
+            allFiches.filter(
+              (f) => toCalendarDate(parseDateTime(f.date)).compare(gdate) >= 0
+            )
+          );
         });
         setLoading(false);
       } catch (error) {

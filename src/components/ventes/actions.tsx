@@ -44,7 +44,7 @@ interface IData {
   gains: number;
 }
 
-const ficheGagnant = async () => {
+/* const ficheGagnant = async () => {
   try {
     const col = collection(db, "lotGagnants");
     const lotGagnants = await getDocs(col);
@@ -62,7 +62,7 @@ const ficheGagnant = async () => {
   } catch (error) {
     throw new Error(`${error}`);
   }
-};
+}; */
 
 const rapportParAgentVente = async (
   agent: string,
@@ -386,7 +386,6 @@ const balanceLogics = async () => {
     const q = query(
       collection(db, "fiches"),
       orderBy("timestamp", "desc"),
-
       where("isDeleted", "==", false)
     );
 
