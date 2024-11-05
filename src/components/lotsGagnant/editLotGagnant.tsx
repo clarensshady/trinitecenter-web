@@ -15,7 +15,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../config";
 import { ClipLoader } from "react-spinners";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import { parseDate } from "@internationalized/date";
+import { getLocalTimeZone, parseDate, today } from "@internationalized/date";
 import { useParams } from "react-router-dom";
 import { IAdd } from "../../types/gagnant";
 import { someTirage } from "../../utils/mainActions";
@@ -27,11 +27,13 @@ interface ISel {
 }
 
 export function EditLogGagnant() {
+  let defaultDate: CalendarDate = today(getLocalTimeZone());
   const [dateDuTirage, setDateDuTirage] = React.useState<CalendarDate>();
   const [data, setData] = React.useState<IAdd>({} as IAdd);
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isFinished, setFinish] = React.useState<boolean>(false);
   const [tirage, setTirage] = React.useState<ISel[]>([]);
+  const [date] = React.useState<CalendarDate>(defaultDate);
 
   const params = useParams();
 
@@ -45,11 +47,13 @@ export function EditLogGagnant() {
     try {
       const docRef = doc(db, "lotGagnants", `${params.id}`);
       setLoading(true);
+      const day = date.day.toString();
+      const nd = day.length == 1 ? `0${day}` : day;
       await updateDoc(docRef, {
         ...data,
-
         Tirage: __.toLower(data.Tirage),
         date: `${dateDuTirage?.toString()}`,
+        dateCreated: `${date.year}-${date.month}-${nd}`,
       });
       setLoading(false);
       setFinish(true);

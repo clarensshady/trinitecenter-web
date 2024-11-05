@@ -97,7 +97,6 @@ export default function TableStatistics({
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
-  console.log("tirage", Tirage, Agent, Surcussale);
 
   React.useEffect(() => {
     const showStatistics = async () => {

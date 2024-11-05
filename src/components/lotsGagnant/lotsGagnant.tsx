@@ -45,6 +45,7 @@ export function LotGagnantComp() {
   // const [dateDeFin, setDateDeFin] = React.useState(defaultDate);
   const [dateDuTirage, setDateDuTirage] =
     React.useState<CalendarDate>(defaultDate);
+  const [date] = React.useState<CalendarDate>(defaultDate);
   const [data, setData] = React.useState<IAdd>({} as IAdd);
   const [isLoading, setLoading] = React.useState<boolean>(false);
   const [isFinished, setFinish] = React.useState<boolean>(false);
@@ -64,6 +65,8 @@ export function LotGagnantComp() {
   const LGdoc = collection(db, "lotGagnants");
   const Ajouter = async () => {
     try {
+      const day = date.day.toString();
+      const nd = day.length == 1 ? `0${day}` : day;
       setLoading(true);
       setTimeout(() => {}, 2000);
       setFinish(true);
@@ -71,6 +74,7 @@ export function LotGagnantComp() {
         ...data,
         Tirage: __.toLower(data.Tirage),
         date: dateDuTirage.toString(),
+        dateCreated: `${date.year}-${date.month}-${nd}`,
       });
       setLoading(false);
       setFinish(false);

@@ -21,10 +21,12 @@ import { TirageHistorique } from "../utils/tirageHistorique";
 import { GainHistorique } from "../utils/gainHistorique";
 import { RapportHistoriques } from "../utils/rapportHistorique";
 import { OptionHistorique } from "../utils/optionHistorique";
+import { getLocalTimeZone, isToday, parseDate } from "@internationalized/date";
 
 interface IList {
   tirage: string;
   listBoule: string;
+  dateCreated: string;
 }
 
 interface IStat {
@@ -70,7 +72,7 @@ export function Content() {
         const numbers = tirages.docs.map((doc) => {
           return {
             tirage: doc.data().Tirage,
-
+            dateCreated: doc.data().dateCreated,
             listBoule: `${doc.data().Lotto31eLot}-${doc.data().SecondLot}-${
               doc.data().ThirdLot
             }`,
@@ -78,7 +80,6 @@ export function Content() {
         });
 
         // setLoading(false);
-
         setBoule(numbers);
       } catch (error) {
         throw new Error(`${error}`);
@@ -97,7 +98,6 @@ export function Content() {
     allTirages();
     showStatistics();
   }, []);
-  console.log(boules);
 
   return (
     <div className="w-full">
@@ -114,10 +114,24 @@ export function Content() {
                     />
                   </div>
                   <div>
-                    <div className="space-y-2 mt-2">
+                    <div className="space-y-2 ">
                       <div>
                         <span className="font-bold text-sm">
-                          Aujourd'hui Midi
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "new york midi"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujourd'hui Midi"
+                            : "Hier Midi"}
                         </span>
                       </div>
 
@@ -150,9 +164,25 @@ export function Content() {
                       </div>
                     </div>
                     {/* for night */}
-                    <div className="space-y-2 mt-2">
+                    <div className="space-y-2 ">
                       <div>
-                        <span className="font-bold text-sm">Hier Soir</span>
+                        <span className="font-bold text-sm">
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "new york soir"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujoud'hui Soir"
+                            : "Hier Soir"}
+                        </span>
                       </div>
 
                       <div className="flex gap-[0.17rem]">
@@ -201,13 +231,29 @@ export function Content() {
                   <div>
                     <div className="space-y-2">
                       <div>
-                        <span className="font-bold text-sm">Hier Soir</span>
+                        <span className="font-bold text-sm">
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "florida midi"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujourd'hui Midi"
+                            : "Hier Midi"}
+                        </span>
                       </div>
                       <div className="flex gap-[0.17rem]">
                         {boules.length > 1
                           ? boules
                               .filter(
-                                (boule) => boule.tirage === "florida soir"
+                                (boule) => boule.tirage === "florida midi"
                               )
                               .map((lb) => lb.listBoule)[0]
                               ?.split("-")
@@ -234,14 +280,28 @@ export function Content() {
                     <div className="space-y-2 mt-2">
                       <div>
                         <span className="font-bold text-sm">
-                          Aujourd'hui Midi
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "florida soir"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujourd'hui soir"
+                            : "Hier soir"}
                         </span>
                       </div>
                       <div className="flex gap-[0.17rem]">
                         {boules.length > 1
                           ? boules
                               .filter(
-                                (boule) => boule.tirage === "florida midi"
+                                (boule) => boule.tirage === "florida soir"
                               )
                               .map((lb) => lb.listBoule)[0]
                               ?.split("-")
@@ -283,13 +343,29 @@ export function Content() {
                   <div>
                     <div className="space-y-2">
                       <div>
-                        <span className="font-bold text-sm">Hier Soir</span>
+                        <span className="font-bold text-sm">
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "georgia midi"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujourd'hui Midi"
+                            : "Hier Midi"}
+                        </span>
                       </div>
                       <div className="flex gap-[0.17rem]">
                         {boules.length > 1
                           ? boules
                               .filter(
-                                (boule) => boule.tirage === "georgia soir"
+                                (boule) => boule.tirage === "georgia midi"
                               )
                               .map((lb) => lb.listBoule)[0]
                               ?.split("-")
@@ -316,13 +392,29 @@ export function Content() {
                     <div className="space-y-2 mt-2">
                       <div>
                         <span className="font-bold text-sm">
-                          Aujourd'hui Midi
+                          {boules.length > 1 &&
+                          isToday(
+                            parseDate(
+                              `${
+                                boules
+                                  .filter(
+                                    (boule) => boule.tirage == "georgia soir"
+                                  )
+                                  .map((b) => b.dateCreated)[0]
+                              }`
+                            ),
+                            getLocalTimeZone()
+                          )
+                            ? "Aujourd'hui Soir"
+                            : "Hier Soir"}
                         </span>
                       </div>
                       <div className="flex gap-[0.17rem]">
                         {boules.length > 1
                           ? boules
-                              .filter((boule) => boule.tirage === "georgia midi")
+                              .filter(
+                                (boule) => boule.tirage === "georgia soir"
+                              )
                               .map((lb) => lb.listBoule)[0]
                               ?.split("-")
                               .map((b, index) => {

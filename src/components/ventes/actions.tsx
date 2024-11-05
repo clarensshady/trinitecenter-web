@@ -34,6 +34,7 @@ interface Ifiche {
   toPaid: number;
   isDeleted: boolean;
   surcussale: string;
+  dateCreated?: string;
 }
 
 interface IData {
@@ -42,6 +43,26 @@ interface IData {
   pertes: number;
   gains: number;
 }
+
+const ficheGagnant = async () => {
+  try {
+    const col = collection(db, "lotGagnants");
+    const lotGagnants = await getDocs(col);
+
+    const gagnant = await getDocs(collection(db, "fiches"));
+    // map over lotGagnants
+    const lot = lotGagnants.docs.map((l) => l.data());
+    // map fiches for finding the winner
+    const data = gagnant.docs.map((doc, index) => {
+      const Tirage = doc.data().Tirage;
+      const Lottery = doc.data().Lottery[index];
+      if (lot.filter((f) => f.Tirage == Tirage).length > 0) {
+      }
+    });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
 
 const rapportParAgentVente = async (
   agent: string,
@@ -361,12 +382,11 @@ const allRapport = async (
 const balanceLogics = async () => {
   try {
     const gdate = toCalendarDate(today(getLocalTimeZone()));
-    const d = new Date(gdate.toString());
 
     const q = query(
       collection(db, "fiches"),
       orderBy("timestamp", "desc"),
-      where("timestamp", ">=", d),
+
       where("isDeleted", "==", false)
     );
 
@@ -384,18 +404,24 @@ const balanceLogics = async () => {
     };
     const fiches = await getDocs(q);
     if (!fiches.empty) {
-      const fich = fiches.docs.map((doc) => {
-        return {
-          id: doc.data().id,
-          agent: doc.data().Agent,
-          gagnant: doc.data().isWinning,
-          Lottery: doc.data().Lottery,
-          isPaid: doc.data().isPaid,
-          toPaid: doc.data().toPaid,
-          isDeleted: doc.data().isDeleted,
-          surcussale: doc.data().Surcussale,
-        };
-      }) as Ifiche[];
+      const fich = fiches.docs
+        .map((doc) => {
+          return {
+            id: doc.data().id,
+            agent: doc.data().Agent,
+            gagnant: doc.data().isWinning,
+            Lottery: doc.data().Lottery,
+            isPaid: doc.data().isPaid,
+            toPaid: doc.data().toPaid,
+            isDeleted: doc.data().isDeleted,
+            surcussale: doc.data().Surcussale,
+            dateCreated: doc.data().dateCreated,
+          };
+        })
+        .filter(
+          (f) =>
+            toCalendarDate(parseDateTime(f.dateCreated)).compare(gdate) >= 0
+        ) as Ifiche[];
 
       // all agent
       const agentFetch = await getDocs(collection(db, "Vendeur"));
