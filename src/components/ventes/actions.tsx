@@ -71,10 +71,13 @@ interface IData {
     const lot = lotGagnants.docs.map((f) => f.data());
 
     const fiches = await getDocs(collection(db, "fiches"));
+    const allFiches = fiches.docs.map((d) => d.data())
 
-    const gagnant = fiches.docs.map((doc) => {
-      const allLots = lot.find((l) => l.Tirage == doc.data().Tirage);
-      // const data =
+    allFiches.map((fiche) => {
+      const isMatched = lot.find((l) => l.Tirage == fiche.Tirage);
+       if(isMatched) {
+          
+       }
     });
   } catch (error) {
     throw new Error(`${error}`);
