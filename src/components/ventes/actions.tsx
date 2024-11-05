@@ -64,7 +64,7 @@ interface IData {
   }
 }; */
 
-const ficheGagnant = async () => {
+/* const ficheGagnant = async () => {
   try {
     const col = collection(db, "lotGagnants");
     const lotGagnants = await getDocs(col);
@@ -79,7 +79,7 @@ const ficheGagnant = async () => {
   } catch (error) {
     throw new Error(`${error}`);
   }
-};
+}; */
 
 const rapportParAgentVente = async (
   agent: string,

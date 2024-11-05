@@ -139,7 +139,7 @@ export default function FicheVenduTable() {
   React.useEffect(() => {
     const showFiche = async () => {
       try {
-        const gdate = toCalendarDate(today(getLocalTimeZone()));
+        // const gdate = toCalendarDate(today(getLocalTimeZone()));
         const q = query(
           collection(db, "fiches"),
           where("isDeleted", "==", false)
