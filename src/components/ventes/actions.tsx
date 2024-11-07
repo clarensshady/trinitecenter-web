@@ -28,6 +28,7 @@ interface IBL {
 interface Ifiche {
   id: string;
   agent: string;
+  Tirage?: string;
   Lottery: IBL[];
   gagnant: boolean;
   isPaid: boolean;
@@ -44,45 +45,218 @@ interface IData {
   gains: number;
 }
 
-/* const ficheGagnant = async () => {
+const ficheGagnantParAgent = async (
+  setResult: React.Dispatch<React.SetStateAction<string>>,
+  Bank: string,
+  dateDebut: CalendarDate,
+  dateDefin: CalendarDate
+) => {
   try {
-    const col = collection(db, "lotGagnants");
-    const lotGagnants = await getDocs(col);
-
-    const gagnant = await getDocs(collection(db, "fiches"));
-    // map over lotGagnants
-    const lot = lotGagnants.docs.map((l) => l.data());
-    // map fiches for finding the winner
-    const data = gagnant.docs.map((doc, index) => {
-      const Tirage = doc.data().Tirage;
-      const Lottery = doc.data().Lottery[index];
-      if (lot.filter((f) => f.Tirage == Tirage).length > 0) {
-      }
-    });
-  } catch (error) {
-    throw new Error(`${error}`);
-  }
-}; */
-
-/* const ficheGagnant = async () => {
-  try {
-    const col = collection(db, "lotGagnants");
-    const lotGagnants = await getDocs(col);
-    const lot = lotGagnants.docs.map((f) => f.data());
+    let TotalWinning = 0;
+    let borlette = 0;
+    let lotto3 = 0;
+    let lotto4 = 0;
+    let lotto5 = 0;
+    let mariage = 0;
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    const gdate = toCalendarDate(today(getLocalTimeZone()));
+    const q = query(collection(db, "lotGagnants"), where("Bank", "==", `${Bank}`));
+    const lotGagnants = await getDocs(q);
+    const lot = lotGagnants.docs
+      .map((doc) => doc.data())
+      .filter(
+        (l) =>
+          toCalendarDate(parseDateTime(`${l.dateCreated}`)).compare(gdate) >= 0
+      );
 
     const fiches = await getDocs(collection(db, "fiches"));
-    const allFiches = fiches.docs.map((d) => d.data())
+    const allFiches = fiches.docs.map((d) => d.data()) as Ifiche[];
+    const PGdoc = doc(db, "primeGenerale", "slWTegZ0f1uy1l8xJecw");
+    const primeGen = await getDoc(PGdoc);
 
-    allFiches.map((fiche) => {
-      const isMatched = lot.find((l) => l.Tirage == fiche.Tirage);
-       if(isMatched) {
-          
-       }
-    });
+    allFiches
+      .filter(
+        (f) =>
+          toCalendarDate(parseDateTime(`${f.dateCreated}`)).compare(gdate) >= 0
+      )
+      .map((fiche) => {
+        const isMatched = lot.find((l: any) => l.Tirage == fiche.Tirage);
+
+        if (isMatched) {
+          fiche.Lottery.map((fi) => {
+            if (fi.borlette == "borlette" && primeGen.exists()) {
+              if (fi.numero == isMatched["Lotto31eLot"]) {
+                first = parseInt(fi.montant) * primeGen.data().tirage1;
+              }
+              if (fi.numero === isMatched["SecondLot"]) {
+                second += parseInt(fi.montant) * primeGen.data().tirage2;
+              }
+              if (fi.numero == isMatched["ThirdLot"]) {
+                third += parseInt(fi.montant) * primeGen.data().tirage3;
+              }
+            }
+
+            if (
+              fi.borlette == "lotto3" &&
+              fi.numero === isMatched["Lotto31eLot"] &&
+              primeGen.exists()
+            ) {
+              lotto3 += parseInt(fi.montant) * primeGen.data().Lotto3;
+            }
+            if (
+              fi.borlette == "lotto4" &&
+              (fi.numero.substring(0, 2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(0, 2) === isMatched["SecondLot"] ||
+                fi.numero.substring(0, 2) === isMatched["ThirdLot"]) &&
+              (fi.numero.substring(2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(2) === isMatched["SecondLot"] ||
+                fi.numero.substring(2) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              lotto4 += parseInt(fi.montant) * primeGen.data().Lotto4op1;
+            }
+            if (
+              fi.borlette == "lotto5" &&
+              fi.numero.substring(0, 3) === isMatched["Lotto31eLot"] &&
+              (fi.numero.substring(3) === isMatched["SecondLot"] ||
+                fi.numero.substring(3) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              lotto5 += parseInt(fi.montant) * primeGen.data().Lotto5op1;
+            }
+            if (
+              fi.borlette == "mariage" &&
+              (fi.numero.substring(0, 2) ==
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(0, 2) === isMatched["SecondLot"] ||
+                fi.numero.substring(0, 2) === isMatched["ThirdLot"]) &&
+              (fi.numero.substring(2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(2) === isMatched["SecondLot"] ||
+                fi.numero.substring(2) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              mariage += parseInt(fi.montant) * primeGen.data().Mariage;
+            }
+          });
+        }
+        borlette = first + second + third;
+        TotalWinning = borlette + lotto3 + lotto4 + lotto5 + mariage;
+        setResult(`${TotalWinning}`);
+      });
   } catch (error) {
     throw new Error(`${error}`);
   }
-}; */
+};
+
+const ficheGagnant = async (
+  setResult: React.Dispatch<React.SetStateAction<string>>
+) => {
+  try {
+    let TotalWinning = 0;
+    let borlette = 0;
+    let lotto3 = 0;
+    let lotto4 = 0;
+    let lotto5 = 0;
+    let mariage = 0;
+    let first = 0;
+    let second = 0;
+    let third = 0;
+    const gdate = toCalendarDate(today(getLocalTimeZone()));
+    const col = collection(db, "lotGagnants");
+    const lotGagnants = await getDocs(col);
+    const lot = lotGagnants.docs
+      .map((doc) => doc.data())
+      .filter(
+        (l) =>
+          toCalendarDate(parseDateTime(`${l.dateCreated}`)).compare(gdate) >= 0
+      );
+
+    const fiches = await getDocs(collection(db, "fiches"));
+    const allFiches = fiches.docs.map((d) => d.data()) as Ifiche[];
+    const PGdoc = doc(db, "primeGenerale", "slWTegZ0f1uy1l8xJecw");
+    const primeGen = await getDoc(PGdoc);
+
+    allFiches
+      .filter(
+        (f) =>
+          toCalendarDate(parseDateTime(`${f.dateCreated}`)).compare(gdate) >= 0
+      )
+      .map((fiche) => {
+        const isMatched = lot.find((l: any) => l.Tirage == fiche.Tirage);
+
+        if (isMatched) {
+          fiche.Lottery.map((fi) => {
+            if (fi.borlette == "borlette" && primeGen.exists()) {
+              if (fi.numero == isMatched["Lotto31eLot"]) {
+                first = parseInt(fi.montant) * primeGen.data().tirage1;
+              }
+              if (fi.numero === isMatched["SecondLot"]) {
+                second += parseInt(fi.montant) * primeGen.data().tirage2;
+              }
+              if (fi.numero == isMatched["ThirdLot"]) {
+                third += parseInt(fi.montant) * primeGen.data().tirage3;
+              }
+            }
+
+            if (
+              fi.borlette == "lotto3" &&
+              fi.numero === isMatched["Lotto31eLot"] &&
+              primeGen.exists()
+            ) {
+              lotto3 += parseInt(fi.montant) * primeGen.data().Lotto3;
+            }
+            if (
+              fi.borlette == "lotto4" &&
+              (fi.numero.substring(0, 2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(0, 2) === isMatched["SecondLot"] ||
+                fi.numero.substring(0, 2) === isMatched["ThirdLot"]) &&
+              (fi.numero.substring(2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(2) === isMatched["SecondLot"] ||
+                fi.numero.substring(2) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              lotto4 += parseInt(fi.montant) * primeGen.data().Lotto4op1;
+            }
+            if (
+              fi.borlette == "lotto5" &&
+              fi.numero.substring(0, 3) === isMatched["Lotto31eLot"] &&
+              (fi.numero.substring(3) === isMatched["SecondLot"] ||
+                fi.numero.substring(3) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              lotto5 += parseInt(fi.montant) * primeGen.data().Lotto5op1;
+            }
+            if (
+              fi.borlette == "mariage" &&
+              (fi.numero.substring(0, 2) ==
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(0, 2) === isMatched["SecondLot"] ||
+                fi.numero.substring(0, 2) === isMatched["ThirdLot"]) &&
+              (fi.numero.substring(2) ===
+                isMatched["Lotto31eLot"].substring(1) ||
+                fi.numero.substring(2) === isMatched["SecondLot"] ||
+                fi.numero.substring(2) === isMatched["ThirdLot"]) &&
+              primeGen.exists()
+            ) {
+              mariage += parseInt(fi.montant) * primeGen.data().Mariage;
+            }
+          });
+        }
+        borlette = first + second + third;
+        TotalWinning = borlette + lotto3 + lotto4 + lotto5 + mariage;
+        setResult(`${TotalWinning}`);
+      });
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
 
 const rapportParAgentVente = async (
   agent: string,
@@ -712,4 +886,6 @@ export {
   StatisticsLot,
   rapportParAgentVente,
   allRapport,
+  ficheGagnant,
+  ficheGagnantParAgent
 };
