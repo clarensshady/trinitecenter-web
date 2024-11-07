@@ -1,7 +1,8 @@
 const allFicheGagnant = async () => {
-    try {
-        
-    } catch (error) {
-        throw new Error(`${error}`)
-    }
-}
+  try {
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+export { allFicheGagnant };
