@@ -15,7 +15,11 @@ import React from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config";
 import TableLotGagnant from "./gagnant/gagnant";
+<<<<<<< HEAD
 // import { balanceLogics } from "./ventes/actions";
+=======
+import { balanceLogics, ficheGagnant } from "./ventes/actions";
+>>>>>>> e87ed96df26a573b75424bb5e7d19a12c130cd96
 import { TirageChart } from "../utils/tirageChart";
 import { TirageHistorique } from "../utils/tirageHistorique";
 import { GainHistorique } from "../utils/gainHistorique";
@@ -56,6 +60,7 @@ interface Ireport {
 
 export function Content() {
   const [boules, setBoule] = React.useState<IList[]>([]);
+  const [gagnant, setGagnant] = React.useState<string>("");
   // const [loading, setLoading] = React.useState<boolean>(false);
   const [stats, setStat] = React.useState<Ireport>({
     totalFiches: 0,
@@ -112,7 +117,18 @@ export function Content() {
 
     allTirages();
     showStatistics();
+
+    const showFicheGagnant = async () => {
+      try {
+        await ficheGagnant(setGagnant);
+      } catch (error) {
+        throw new Error(`${error}`);
+      }
+    };
+    showFicheGagnant();
   }, []);
+
+  console.log("montant is :", gagnant);
 
   return (
     <div className="w-full">
@@ -486,7 +502,11 @@ export function Content() {
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-white">
+<<<<<<< HEAD
                       {stats.totalAmountTopay}
+=======
+                      {gagnant}
+>>>>>>> e87ed96df26a573b75424bb5e7d19a12c130cd96
                     </span>
                   </div>
                 </div>
@@ -534,7 +554,11 @@ export function Content() {
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-red-400">
+<<<<<<< HEAD
                       {stats.totalLeft}
+=======
+                      {stats.vente - parseInt(gagnant)}
+>>>>>>> e87ed96df26a573b75424bb5e7d19a12c130cd96
                     </span>
                   </div>
                 </div>
