@@ -21,7 +21,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Trinite from "../assets/Trinite.png";
+import Excellence from "../assets/Excellence.png";
 import {
   faBarsStaggered,
   faRightFromBracket,
@@ -120,8 +120,8 @@ export default function HomeNavbar({ setWidth }: Inav) {
         </div>
         <div className="sm:ml-3">
           <img
-            src={Trinite}
-            style={{ width: 70, height: 70, objectFit: "cover" }}
+            src={Excellence}
+            style={{ width: 52, height: 52, objectFit: "cover" }}
           />
         </div>
       </NavbarBrand>

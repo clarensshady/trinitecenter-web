@@ -13,7 +13,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import Trinite from "../assets/Trinite.png";
+import Excellence from "../assets/Excellence.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUserGear } from "@fortawesome/free-solid-svg-icons";
 
@@ -32,8 +32,8 @@ export function NavbarScreen() {
       <Navbar maxWidth="full" isBordered>
         <NavbarBrand>
           <img
-            src={Trinite}
-            style={{ width: 65, height: 65, objectFit: "cover" }}
+            src={Excellence}
+            style={{ width: 54, height: 54, objectFit: "cover" }}
           />
         </NavbarBrand>
         <NavbarContent justify="end">
