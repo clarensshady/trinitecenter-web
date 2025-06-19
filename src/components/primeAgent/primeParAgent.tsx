@@ -45,7 +45,8 @@ export function PrimeParAgent() {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const name = event.target.name;
-    setData({ ...data, [name]: event.target.value });
+    const value = event.target.value
+    setData({ ...data, [name]: name == "Agent" ? value.toLowerCase() : value });
   };
 
   const PAcol = collection(db, "primeAgent");

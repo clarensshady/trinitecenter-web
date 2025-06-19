@@ -1,4 +1,5 @@
 interface IprimGen<S> {
+  id?: S;
   tirage1: S;
   tirage2: S;
   tirage3: S;
@@ -16,6 +17,7 @@ interface IprimGen<S> {
 interface IPrime extends IprimGen<string> {
   Tirage: string;
   Agent: string;
+  [key: string]: any;
 }
 
 interface IListofPrimeAgent {

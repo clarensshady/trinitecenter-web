@@ -7,6 +7,7 @@ import {
   toCalendarDate,
 } from "@internationalized/date";
 import { IFi } from "../../types/fiches";
+import { getAllAgentsReport } from "./ winningAgent";
 
 interface IData {
   id?: string;
@@ -27,51 +28,24 @@ const rapportParAgent = async (
 ) => {
   try {
     if (agent == "tout") {
-      const q = collection(db, "fiches");
-      setLoading(true);
-      const data = await getDocs(q);
-      if (data.empty) {
-        setLoading(false);
-      }
-      if (!data.empty) {
-        const rapport = data.docs.map((fi) => {
-          return {
-            id: fi.id,
-            tirages: fi.data().Tirage,
-            lottery: fi.data().Lottery,
-            dateCreated: fi.data().dateCreated,
-            bank: fi.data().Bank,
-            toPaid: fi.data().toPaid,
-          } as IFi;
-        });
-        setLoading(false);
-        const FicheByDate = rapport.filter(
-          (f) =>
-            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDebut) >=
-              0 &&
-            toCalendarDate(parseDateTime(f.dateCreated)).compare(dateDefin) <= 0
-        );
+      console.log("agent: ")
+      setLoading(true)
+      console.log("not win")
+      const win = await  getAllAgentsReport(dateDebut.toString(), dateDefin.toString()); 
+          // return {
+          //   id: FicheByDate[index].id,
+          //   date: dateDebut.toString(),
+          //   agent: ra,
+          //   fiche: __.size(FicheByDate.map((a) => a.bank == ra)),
+          //   montant: montants,
+          //   pertes: pertes,
+          //   gains: gains,
+          // } as IData;
+        
 
-        const agentRapport = __.uniq(FicheByDate.map((d) => d.bank));
-        const stats = agentRapport.map((ra, index) => {
-          const bank = FicheByDate.filter((f) => f.bank == ra);
-          const lottery = bank.map((f) => f.lottery).flat(1);
-          const pertes = __.sum(bank.map((f) => f.toPaid)) ?? 0;
-          const montants = __.sum(lottery.map((f) => f.montant).map(Number));
-          const gains = montants - pertes ?? 0;
-          return {
-            id: FicheByDate[index].id,
-            date: dateDebut.toString(),
-            agent: ra,
-            fiche: __.size(FicheByDate.map((a) => a.bank == ra)),
-            montant: montants,
-            pertes: pertes,
-            gains: gains,
-          } as IData;
-        });
-
-        setData(stats);
-      }
+        setData(win);
+        setLoading(false)
+      
     } else {
       const q = query(
         collection(db, "fiches"),
@@ -117,7 +91,7 @@ const rapportParAgent = async (
         // pertes
         const pertes = __.sum(FicheByDate.map((f) => f.toPaid)) ?? 0;
         // gains
-        const gains = montants - pertes ?? 0;
+        // const gains = montants - pertes ?? 0;
         setData([
           {
             id: `${Math.random() * 100}`,
@@ -126,7 +100,7 @@ const rapportParAgent = async (
             fiche: fiches,
             montant: montants,
             pertes,
-            gains,
+            gains: 0,
           },
         ]);
       }

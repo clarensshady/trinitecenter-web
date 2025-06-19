@@ -15,48 +15,59 @@ import React from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config";
 import TableLotGagnant from "./gagnant/gagnant";
-import { balanceLogics } from "./ventes/actions";
+// import { balanceLogics } from "./ventes/actions";
 import { TirageChart } from "../utils/tirageChart";
 import { TirageHistorique } from "../utils/tirageHistorique";
 import { GainHistorique } from "../utils/gainHistorique";
 import { RapportHistoriques } from "../utils/rapportHistorique";
 import { OptionHistorique } from "../utils/optionHistorique";
 import { getLocalTimeZone, isToday, parseDate } from "@internationalized/date";
+import { AllWinningFiche } from "./ventes/winningFiches";
 
 interface IList {
   tirage: string;
   listBoule: string;
   dateCreated: string;
+  date: string;
 }
 
-interface IStat {
-  fiche: number;
-  vente: number;
-  superviseur: number;
-  agent: number;
-  agentInactive: number;
-  agentActive: number;
-  commissions: number;
-  aPaye: number;
-  balance: number;
-  ficheGagnants: number;
+interface Ireport {
+  totalFiches: number;
+  ficheGagnant: number;
+  activeAgent: string;
+  inactiveAgent: string;
+  totalAmount: string;
+  totalAmountTopay: string;
+  totalLeft: string;
 }
+
+// interface IStat {
+//   fiche: number;
+//   vente: number;
+//   superviseur: number;
+//   agent: number;
+//   agentInactive: number;
+//   agentActive: number;
+//   commissions: number;
+//   aPaye: number;
+//   balance: number;
+//   ficheGagnants: number;
+// }
 
 export function Content() {
   const [boules, setBoule] = React.useState<IList[]>([]);
   // const [loading, setLoading] = React.useState<boolean>(false);
-  const [stats, setStat] = React.useState<IStat>({
-    fiche: 0,
-    vente: 0,
-    superviseur: 0,
-    agent: 0,
-    agentInactive: 0,
-    agentActive: 0,
-    commissions: 0,
-    aPaye: 0,
-    balance: 0,
-    ficheGagnants: 0,
+  const [stats, setStat] = React.useState<Ireport>({
+    totalFiches: 0,
+    ficheGagnant: 0,
+    activeAgent: "",
+    inactiveAgent: "",
+    totalAmount: "",
+    totalAmountTopay: "",
+    totalLeft: ""
   });
+
+  
 
   const tirageRef = collection(db, "lotGagnants");
 
@@ -72,6 +83,7 @@ export function Content() {
         const numbers = tirages.docs.map((doc) => {
           return {
             tirage: doc.data().Tirage,
+            date: doc.data().date,
             dateCreated: doc.data().dateCreated,
             listBoule: `${doc.data().Lotto31eLot}-${doc.data().SecondLot}-${
               doc.data().ThirdLot
@@ -88,8 +100,11 @@ export function Content() {
 
     const showStatistics = async () => {
       try {
-        const data = await balanceLogics();
-        setStat(data);
+        
+        // const data = await balanceLogics();
+        // setStat(data);
+        const da = await AllWinningFiche()
+        setStat(da)
       } catch (error) {
         throw new Error(`${error}`);
       }
@@ -125,7 +140,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "new york midi"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -175,7 +190,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "new york soir"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -240,7 +255,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "florida midi"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -288,7 +303,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "florida soir"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -352,7 +367,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "georgia midi"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -400,7 +415,7 @@ export function Content() {
                                   .filter(
                                     (boule) => boule.tirage == "georgia soir"
                                   )
-                                  .map((b) => b.dateCreated)[0]
+                                  .map((b) => b.date)[0]
                               }`
                             ),
                             getLocalTimeZone()
@@ -450,12 +465,12 @@ export function Content() {
                 <div className="flex flex-col gap-1 py-3">
                   <div>
                     <span className="text-sm text-white">
-                      Total Ventes ( {stats.vente} )
+                      Total Ventes ( {stats.totalAmount} )
                     </span>
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-white">
-                      {stats.vente}
+                      {stats.totalAmount}
                     </span>
                   </div>
                 </div>
@@ -471,7 +486,7 @@ export function Content() {
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-white">
-                      {stats.aPaye}
+                      {stats.totalAmountTopay}
                     </span>
                   </div>
                 </div>
@@ -483,10 +498,10 @@ export function Content() {
               <CardBody>
                 <div className="flex flex-col gap-1 py-3">
                   <div>
-                    <span className="text-sm text-white">Commissions</span>
+                    <span className="text-sm text-white">F. Vendu | F. Gagné</span>
                   </div>
                   <div>
-                    <span className="font-bold text-2xl text-white">0</span>
+                    <span className="font-bold text-2xl text-white">{stats.totalFiches} | {stats.ficheGagnant}</span>
                   </div>
                 </div>
               </CardBody>
@@ -503,7 +518,7 @@ export function Content() {
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-white">
-                      {stats.agentActive} | {stats.agentInactive}
+                      {stats.activeAgent} | {stats.inactiveAgent}
                     </span>
                   </div>
                 </div>
@@ -519,7 +534,7 @@ export function Content() {
                   </div>
                   <div>
                     <span className="font-bold text-2xl text-red-400">
-                      {stats.balance}
+                      {stats.totalLeft}
                     </span>
                   </div>
                 </div>

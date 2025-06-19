@@ -12,9 +12,10 @@ import {
 } from "@nextui-org/react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import __ from "lodash";
-import { allRapport, rapportParAgentVente } from "./actions";
+import {  rapportParAgentVente } from "./actions";
 import { allBank, allTirage } from "../../utils/mainActions";
 import { ClipLoader } from "react-spinners";
+import { AllWinningFiche } from "./winningFiches";
 
 interface IStat {
   fiche: number;
@@ -52,7 +53,6 @@ export function VenteComp() {
   const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-
   const showRapport = React.useCallback(() => {
     const showRapport = async () => {
       try {
@@ -93,7 +93,8 @@ export function VenteComp() {
     showBank();
     const showStatistics = async () => {
       try {
-        await allRapport(setStat);
+        const win = await AllWinningFiche()
+        setStat({fiche: win.totalFiches, montant: parseInt(win.totalAmount), pertes: parseInt(win.totalAmountTopay), gains: win.ficheGagnant})
       } catch (error) {
         throw new Error(`${error}`);
       }

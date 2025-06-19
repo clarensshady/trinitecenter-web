@@ -179,7 +179,7 @@ export function PrimeParTirage() {
                         </div>
                         <div className="flex gap-4">
                           <Input
-                            name="Tirage1"
+                            name="tirage1"
                             onChange={onChange}
                             isRequired
                             type="text"
@@ -189,7 +189,7 @@ export function PrimeParTirage() {
                           />
                           <Input
                             onChange={onChange}
-                            name="Tirage2"
+                            name="tirage2"
                             isRequired
                             type="text"
                             label="Tirage 2"
@@ -200,7 +200,7 @@ export function PrimeParTirage() {
                         <div className="flex gap-4">
                           <Input
                             onChange={onChange}
-                            name="Tirage3"
+                            name="tirage3"
                             isRequired
                             type="text"
                             label="Tirage 3"
